@@ -21,6 +21,8 @@
 #include <netinet/in.h>
 
 #include <sys/ioctl.h>
+#include <sys/socket.h>
+#include <sys/uio.h>
 #include "pt1_ioctl.h"
 
 #include "config.h"
@@ -82,6 +84,68 @@ void calc_cn(int fd, int type);
 int tune(char *channel, thread_data *tdata, char *device);
 int close_tuner(thread_data *tdata);
 
+
+int channel_num( char *channel )
+{
+       int ch = 0;
+       int node = 0;
+       int slot = 0;
+       char *bs_ch;
+
+       if( !strcmp( channel, "(null)" ) )
+               return 0;
+       switch( *channel ){
+               case 'B':
+                       // BS
+                       bs_ch = channel + 1;
+                       if( *bs_ch == 'S' ){
+                               while( isdigit( *++bs_ch ) ){
+                                       node *= 10;
+                                       node += *bs_ch - '0';
+                               }
+                               if( *bs_ch=='_' && (node&0x01) && node<ISDB_T_NODE_LIMIT ){
+                                       if( isdigit( *++bs_ch ) ){
+                                               slot = *bs_ch - '0';
+                                               if( *++bs_ch=='\0' && slot<ISDB_T_SLOT_LIMIT ){
+                                                       ch = ( node / 2 ) * 10 + slot + 1000;
+                                                       break;
+                                               }
+                                       }
+                               }
+                       }
+                       break;
+               case 'C':
+                       bs_ch = channel + 1;
+                       if( *bs_ch == 'S' ){
+                               // CS
+                               while( isdigit( *++bs_ch ) ){
+                                       node *= 10;
+                                       node += *bs_ch - '0';
+                               }
+                               if( *bs_ch=='\0' && !(node&0x01) && node>=2 && node<=ISDB_T_NODE_LIMIT ){
+                                       ch = ( node / 2 ) * 10 + 1000;
+                                       break;
+                               }
+                       }else{
+                               // CATV
+                               while( isdigit( *bs_ch ) ){
+                                       node *= 10;
+                                       node += *bs_ch++ - '0';
+                               }
+                               if( *bs_ch=='\0' && node>=13 && node<=63 ){
+                                       ch = node + 2000;
+                                       break;
+                               }
+                       }
+                       break;
+               default:
+                       ch = atoi(channel);
+                       break;
+       }
+       return ch;
+}
+
+
 //read 1st line from socket
 int read_line(int socket, char *p){
     int len = 0;
@@ -113,6 +177,7 @@ mq_recv(void *t)
     thread_data *tdata = (thread_data *)t;
     message_buf rbuf;
     char channel[16];
+	char service_id[32] = {0};
     int ch = 0, recsec = 0, time_to_add = 0;
 
     while(1) {
@@ -120,9 +185,11 @@ mq_recv(void *t)
             return NULL;
         }
 
-        sscanf(rbuf.mtext, "ch=%s t=%d e=%d", channel, &recsec, &time_to_add);
-        ch = atoi(channel);
-//        fprintf(stderr, "ch=%d time=%d extend=%d\n", ch, recsec, time_to_add);
+        sscanf(rbuf.mtext, "ch=%s t=%d e=%d sid=%s", channel, &recsec, &time_to_add, service_id);
+	ch = channel_num(channel);
+	if( !strcmp( service_id, "(null)" ) )
+		*service_id = '\0';
+//        fprintf(stderr, "ch=%d time=%d extend=%d sid=%s\n", ch, recsec, time_to_add, service_id);
 
         if(ch && tdata->ch != ch) {
 #if 0
@@ -849,7 +916,7 @@ tune(char *channel, thread_data *tdata, char *device)
             return 1;
         }
         else {
-            tdata->ch = atoi(channel);
+            tdata->ch = channel_num(channel);
         }
     }
     else {
@@ -890,7 +957,7 @@ tune(char *channel, thread_data *tdata, char *device)
             return 1;
         }
         else {
-            tdata->ch = atoi(channel);
+            tdata->ch = channel_num(channel);
         }
     }
 
@@ -1538,8 +1605,10 @@ main(int argc, char **argv)
     destroy_queue(p_queue);
 
     /* close output file */
-    if(!use_stdout)
+    if(!use_stdout){
+		fsync(tdata.wfd);
         close(tdata.wfd);
+    }
 
     /* free socket data */
     if(use_udp) {

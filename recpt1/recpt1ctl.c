@@ -20,7 +20,7 @@ typedef struct msgbuf {
 void
 show_usage(char *cmd)
 {
-    fprintf(stderr, "Usage: \n%s --pid pid [--channel channel] [--extend time_to_extend] [--time recording_time]\n", cmd);
+    fprintf(stderr, "Usage: \n%s --pid pid [--channel channel] [--sid SID1,SID2] [--extend time_to_extend] [--time recording_time]\n", cmd);
     fprintf(stderr, "\n");
 }
 
@@ -30,6 +30,7 @@ show_options(void)
     fprintf(stderr, "Options:\n");
     fprintf(stderr, "--pid:               Process id of recpt1 to control\n");
     fprintf(stderr, "--channel:           Tune to specified channel\n");
+    fprintf(stderr, "--sid SID1,SID2,...: Specify SID number in CSV format (101,102,...)\n");
     fprintf(stderr, "--extend:            Extend recording time\n");
     fprintf(stderr, "--time:              Set total recording time\n");
     fprintf(stderr, "--help:              Show this help\n");
@@ -109,7 +110,13 @@ parse_time(char *rectimestr, int *recsec)
     else {
         char *tmpstr;
         char *p1, *p2;
+	int  flag;
 
+	if( *rectimestr == '-' ){
+		rectimestr++;
+		flag = 1;
+	}else
+		flag = 0;
         tmpstr = strdup(rectimestr);
         p1 = tmpstr;
         while(*p1 && !isdigit(*p1))
@@ -135,6 +142,8 @@ parse_time(char *rectimestr, int *recsec)
 
         /* second */
         *recsec += atoi(p1);
+	if( flag )
+		*recsec *= -1;
 
         free(tmpstr);
     }
@@ -152,12 +161,14 @@ main(int argc, char **argv)
     int ch=0, recsec = 0, extsec=0;
     message_buf sbuf;
     size_t buf_length;
+    char *sid_list = NULL;
 
     int result;
     int option_index;
     struct option long_options[] = {
         { "pid",       1, NULL, 'p'},
         { "channel",   1, NULL, 'c'},
+	{ "sid",       1, NULL, 'i'},
         { "extend",    1, NULL, 'e'},
         { "time",      1, NULL, 't'},
         { "help",      0, NULL, 'h'},
@@ -166,7 +177,7 @@ main(int argc, char **argv)
         {0, 0, NULL, 0} /* terminate */
     };
 
-    while((result = getopt_long(argc, argv, "p:c:e:t:hvl",
+    while((result = getopt_long(argc, argv, "p:c:i:e:t:hvl",
                                 long_options, &option_index)) != -1) {
         switch(result) {
         case 'h':
@@ -209,6 +220,10 @@ main(int argc, char **argv)
             parse_time(optarg, &recsec);
             fprintf(stderr, "Total recording time = %d sec\n", recsec);
             break;
+	case 'i':
+	    sid_list = optarg;
+	    fprintf(stderr, "ServiceID = %s\n", sid_list);
+	    break;
         }
     }
 
@@ -227,7 +242,7 @@ main(int argc, char **argv)
     if (ch)
         sprintf(sbuf.mtext, "ch=%d t=%d e=%d", ch, recsec, extsec);
     else
-        sprintf(sbuf.mtext, "ch=%s t=%d e=%d", channel, recsec, extsec);
+        sprintf(sbuf.mtext, "ch=%s t=%d e=%d sid=%s", channel, recsec, extsec, sid_list);
 
     buf_length = strlen(sbuf.mtext) + 1 ;
 
