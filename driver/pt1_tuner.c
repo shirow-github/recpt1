@@ -461,6 +461,7 @@ int		isdb_t_frequency(void __iomem *regs, struct mutex *lock, int addr, int chan
 	}freq[2] ;
 
 	if(channel >= MAX_ISDB_T_CHANNEL){
+		printk(KERN_INFO "PT1:ISDB-T CHANNEL OVER(%i:113)\n", channel);
 		return -EIO ;
 	}
 
@@ -493,7 +494,7 @@ int		isdb_t_frequency(void __iomem *regs, struct mutex *lock, int addr, int chan
 		}
 	}
 	if(tmcclock != TRUE){
-		printk(KERN_INFO "PT1:ISDB-T LOCK NG(%08x)\n", val);
+		printk(KERN_INFO "PT1:ISDB-T PLL LOCK NG(%08x)\n", val);
 		return -EIO ;
 	}
 
@@ -512,6 +513,7 @@ int		isdb_t_frequency(void __iomem *regs, struct mutex *lock, int addr, int chan
 		}
 	}
 	if(tmcclock != TRUE){
+		printk(KERN_INFO "PT1:ISDB-T TUNE READ NG(%08x)\n", val);
 		return -EIO ;
 	}
 	return 0 ;
