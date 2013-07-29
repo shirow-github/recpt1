@@ -45,7 +45,11 @@ typedef struct pm_message {
 #include	"pt1_ioctl.h"
 
 /* These identify the driver base version and may not be removed. */
+#if LINUX_VERSION_CODE < KERNEL_VERSION(3,8,0)
 static char version[] __devinitdata =
+#else
+static char version[] =
+#endif
 DRV_NAME ".c: " DRV_VERSION " " DRV_RELDATE " \n";
 
 MODULE_AUTHOR("Tomoaki Ishikawa tomy@users.sourceforge.jp and Yoshiki Yazawa yaz@honeyplanet.jp");
@@ -694,7 +698,11 @@ int		pt1_dma_free(struct pci_dev *pdev, PT1_DEVICE *dev_conf)
 	}
 	return 0 ;
 }
+#if LINUX_VERSION_CODE < KERNEL_VERSION(3,8,0)
 static int __devinit pt1_pci_init_one (struct pci_dev *pdev,
+#else
+static int pt1_pci_init_one (struct pci_dev *pdev,
+#endif
 				     const struct pci_device_id *ent)
 {
 	int			rc ;
@@ -920,7 +928,11 @@ out_err_regbase:
 
 }
 
+#if LINUX_VERSION_CODE < KERNEL_VERSION(3,8,0)
 static void __devexit pt1_pci_remove_one(struct pci_dev *pdev)
+#else
+static void pt1_pci_remove_one(struct pci_dev *pdev)
+#endif
 {
 
 	int		lp ;
@@ -987,7 +999,11 @@ static int pt1_pci_resume (struct pci_dev *pdev)
 static struct pci_driver pt1_driver = {
 	.name		= DRV_NAME,
 	.probe		= pt1_pci_init_one,
+#if LINUX_VERSION_CODE < KERNEL_VERSION(3,8,0)
 	.remove		= __devexit_p(pt1_pci_remove_one),
+#else
+	.remove		= pt1_pci_remove_one,
+#endif
 	.id_table	= pt1_pci_tbl,
 #ifdef CONFIG_PM
 	.suspend	= pt1_pci_suspend,
