@@ -8,7 +8,7 @@ dkms install -m pt1_drv -v 1.1.0
 reboot
 
 
-【dkmsでのインストール方法】
+【dkmsでのアンインストール方法】
 
 su
 dkms remove -m pt1_drv -v 1.1.0 --all
