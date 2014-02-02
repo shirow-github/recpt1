@@ -97,6 +97,7 @@ parse_time(char *rectimestr, int *recsec)
     /* indefinite */
     if(!strcmp("-", rectimestr)) {
         *recsec = -1;
+	return 0;
     }
     /* colon */
     else if(strchr(rectimestr, ':')) {
@@ -105,6 +106,10 @@ parse_time(char *rectimestr, int *recsec)
             *recsec = n1 * 3600 + n2 * 60 + n3;
         else if(sscanf(rectimestr, "%d:%d", &n1, &n2) == 2)
             *recsec = n1 * 3600 + n2 * 60;
+	else
+	    return 1; /* unsuccessful */
+
+	return 0;
     }
     /* HMS */
     else {
