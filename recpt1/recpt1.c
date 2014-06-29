@@ -1199,6 +1199,7 @@ main(int argc, char **argv)
 
     //http broadcasting
     if(use_http){
+            BUFSZ *qbuf;
             fprintf(stderr, "run as a daemon..\n");
             if(daemon(1,1)){
                 perror("failed to start");
@@ -1411,6 +1412,10 @@ main(int argc, char **argv)
                 pthread_join(ipc_thread, NULL);
 
                 //reset queue
+                while(p_queue->num_used) {
+		     qbuf = dequeue(p_queue);
+		     free(qbuf);
+                }
                 destroy_queue(p_queue);
                 p_queue = create_queue(MAX_QUEUE);
 
