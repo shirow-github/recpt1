@@ -23,4 +23,10 @@
 #define		BIT_RAM_OVERFLOW		(1 << 3)	//
 #define		BIT_INITIATOR_ERROR		(1 << 4)	//
 #define		BIT_INITIATOR_WARNING	(1 << 5)	//
+
+/***************************************************************************/
+/* Debug Logレベル定義                                                     */
+/***************************************************************************/
+extern int debug;
+#define PT1_PRINTK(verbose, level, fmt, args...)      {if(verbose <= debug)printk(level "PT1: " fmt, ##args);}
 #endif

@@ -115,7 +115,7 @@ BIT 17, 17+8 ON
 	for(lp = 0; lp < phase; lp++){
 		rc = i2c_lock_one(regs, WRITE_RAM_ENABLE, RAM_SHIFT);
 		if(rc < 0){
-			printk(KERN_ERR "PT1:LOCK FALUT\n");
+			PT1_PRINTK(0, KERN_ERR, "LOCK FALUT\n");
 			return rc ;
 		}
 	}
@@ -185,7 +185,7 @@ static	int		i2c_lock_one(void __iomem *regs, __u32 firstval, __u32 lockval)
 		}
 		schedule_timeout_interruptible(msecs_to_jiffies(1));
 	}
-	printk(KERN_INFO "PT1:Lock Fault(%x:%x)\n", val, val2);
+	PT1_PRINTK(0, KERN_ERR, "Lock Fault(%x:%x)\n", val, val2);
 	return -EIO ;
 }
 static	int		i2c_unlock(void __iomem *regs, int lockval)
@@ -436,11 +436,11 @@ void	i2c_write(void __iomem *regs, struct mutex *lock, WBLOCK *wblock)
 	// ロックする
 	mutex_lock(lock);
 #if 0
-	printk(KERN_INFO "Addr=%x(%d)\n", wblock->addr, wblock->count);
+	PT1_PRINTK(7, KERN_DEBUG, "Addr=%x(%d)\n", wblock->addr, wblock->count);
 	for(lp = 0 ; lp  < wblock->count ; lp++){
-		printk(KERN_INFO "%x\n", wblock->value[lp]);
+		PT1_PRINTK(7, KERN_DEBUG, "%x\n", wblock->value[lp]);
 	}
-	printk(KERN_INFO "\n");
+	PT1_PRINTK(7, KERN_DEBUG, "\n");
 #endif
 
 	blockwrite(regs, wblock);
@@ -465,11 +465,11 @@ __u32	i2c_read(void __iomem *regs, struct mutex *lock, WBLOCK *wblock, int size)
 	// ロックする
 	mutex_lock(lock);
 #if 0
-	printk(KERN_INFO "Addr=%x:%d:%d\n", wblock->addr, wblock->count, size);
+	PT1_PRINTK(7, KERN_DEBUG, "Addr=%x:%d:%d\n", wblock->addr, wblock->count, size);
 	for(lp = 0 ; lp  < wblock->count ; lp++){
-		printk(KERN_INFO "%x\n", wblock->value[lp]);
+		PT1_PRINTK(7, KERN_DEBUG, "%x\n", wblock->value[lp]);
 	}
-	printk(KERN_INFO "\n");
+	PT1_PRINTK(7, KERN_DEBUG, "\n");
 #endif
 	blockread(regs, wblock, size);
 

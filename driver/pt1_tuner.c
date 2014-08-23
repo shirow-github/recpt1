@@ -112,7 +112,7 @@ static	int		init_isdb_s(void __iomem *regs, int cardtype, struct mutex *lock, __
 
 	if(cardtype == PT1) {
 		if((val & 0xff) != 0x4c) {
-			printk(KERN_INFO "PT1:ISDB-S Read(%x)\n", val);
+			PT1_PRINTK(0, KERN_ERR, "PT1:ISDB-S Read(%x)\n", val);
 			return -EIO ;
 		}
 		for(lp = 0 ; lp < PT1_MAX_ISDB_S_INIT ; lp++) {
@@ -123,7 +123,7 @@ static	int		init_isdb_s(void __iomem *regs, int cardtype, struct mutex *lock, __
 	}
 	else if(cardtype == PT2) {
 		if((val & 0xff) != 0x52) {
-			printk(KERN_INFO "PT2:ISDB-S Read(%x)\n", val);
+			PT1_PRINTK(0, KERN_ERR, "PT2:ISDB-S Read(%x)\n", val);
 			return -EIO ;
 		}
 		for(lp = 0 ; lp < PT2_MAX_ISDB_S_INIT ; lp++) {
@@ -195,7 +195,7 @@ void	set_sleepmode(void __iomem *regs, struct mutex *lock, int address, int tune
 	if(type == TYPE_WAKEUP){
 		switch(tuner_type){
 		case CHANNEL_TYPE_ISDB_S:
-			printk(KERN_INFO "PT1:ISDB-S Wakeup\n");
+			PT1_PRINTK(1, KERN_INFO, "ISDB-S Wakeup\n");
 			memcpy(&wk, &isdb_s_wake, sizeof(WBLOCK));
 			wk.addr = address;
 			i2c_write(regs, lock, &wk);
@@ -205,7 +205,7 @@ void	set_sleepmode(void __iomem *regs, struct mutex *lock, int address, int tune
 			i2c_write(regs, lock, &wk);
 			break ;
 		case CHANNEL_TYPE_ISDB_T:
-			printk(KERN_INFO "PT1:ISDB-T Wakeup\n");
+			PT1_PRINTK(1, KERN_INFO, "ISDB-T Wakeup\n");
 			memcpy(&wk, &isdb_t_wake, sizeof(WBLOCK));
 			wk.addr = address;
 			i2c_write(regs, lock, &wk);
@@ -219,13 +219,13 @@ void	set_sleepmode(void __iomem *regs, struct mutex *lock, int address, int tune
 	if(type == TYPE_SLEEP){
 		switch(tuner_type){
 		case CHANNEL_TYPE_ISDB_S:
-			printk(KERN_INFO "PT1:ISDB-S Sleep\n");
+			PT1_PRINTK(1, KERN_INFO, "ISDB-S Sleep\n");
 			memcpy(&wk, &isdb_s_sleep, sizeof(WBLOCK));
 			wk.addr = address;
 			i2c_write(regs, lock, &wk);
 			break ;
 		case CHANNEL_TYPE_ISDB_T:
-			printk(KERN_INFO "PT1:ISDB-T Sleep\n");
+			PT1_PRINTK(1, KERN_INFO, "ISDB-T Sleep\n");
 			memcpy(&wk, &isdb_t_sleep, sizeof(WBLOCK));
 			wk.addr = address;
 			i2c_write(regs, lock, &wk);
@@ -264,7 +264,7 @@ int		bs_frequency(void __iomem *regs, struct mutex *lock, int addr, int channel)
 	}
 
 	if(tmcclock == FALSE){
-		printk(KERN_INFO "PLL LOCK ERROR\n");
+		PT1_PRINTK(0, KERN_ERR, "PLL LOCK ERROR\n");
 		return -EIO;
 	}
 
@@ -286,7 +286,7 @@ int		bs_frequency(void __iomem *regs, struct mutex *lock, int addr, int channel)
 	}
 
 	if(tmcclock == FALSE){
-		printk(KERN_INFO "TMCC LOCK ERROR\n");
+		PT1_PRINTK(0, KERN_ERR, "TMCC LOCK ERROR\n");
 		return -EIO;
 	}
 
@@ -319,7 +319,7 @@ int		ts_lock(void __iomem *regs, struct mutex *lock, int addr, __u16 ts_id)
 			return 0 ;
 		}
 	}
-	printk(KERN_INFO "PT1:ERROR TS-LOCK(%x)\n", ts_id);
+	PT1_PRINTK(0, KERN_ERR, "ERROR TS-LOCK(%x)\n", ts_id);
 	return -EIO ;
 }
 int		bs_tune(void __iomem *regs, struct mutex *lock, int addr, int channel, ISDB_S_TMCC *tmcc)
@@ -340,7 +340,7 @@ int		bs_tune(void __iomem *regs, struct mutex *lock, int addr, int channel, ISDB
 	}ts_id ;
 
 	if(channel >= MAX_BS_CHANNEL){
-		printk(KERN_INFO "Invalid Channel(%d)\n", channel);
+		PT1_PRINTK(0, KERN_ERR, "Invalid Channel(%d)\n", channel);
 		return -EIO ;
 	}
 	val = bs_frequency(regs, lock, addr, channel);
@@ -494,7 +494,7 @@ int		isdb_t_frequency(void __iomem *regs, struct mutex *lock, int addr, int chan
 		}
 	}
 	if(tmcclock != TRUE){
-		printk(KERN_INFO "PT1:ISDB-T PLL LOCK NG(%08x)\n", val);
+		PT1_PRINTK(0, KERN_ERR, "ISDB-T LOCK NG(%08x)\n", val);
 		return -EIO ;
 	}
 
@@ -528,7 +528,7 @@ int		isdb_t_read_signal_strength(void __iomem *regs, struct mutex *lock, int add
 	memcpy(&wk, &isdb_t_signal1, sizeof(WBLOCK));
 	wk.addr = addr;
 	val = i2c_read(regs, lock, &wk, 1);
-	printk(KERN_INFO "CN(1)Val(%x)\n", val);
+	PT1_PRINTK(1, KERN_INFO, "CN(1)Val(%x)\n", val);
 
 	memcpy(&wk, &isdb_t_signal2, sizeof(WBLOCK));
 	wk.addr = addr;
@@ -546,7 +546,7 @@ int		isdb_t_tune(void __iomem *regs, struct mutex *lock, int addr, int channel, 
 	WBLOCK	wk;
 	__u32	val ;
 
-	printk(KERN_INFO "Channel(%d) Start\n", channel);
+	PT1_PRINTK(1, KERN_INFO, "Channel(%d) Start\n", channel);
 	if(channel >= MAX_ISDB_T_CHANNEL){
 		return -EIO ;
 	}
@@ -562,7 +562,7 @@ int		isdb_t_tune(void __iomem *regs, struct mutex *lock, int addr, int channel, 
 			break ;
 		}
 	}
-	printk(KERN_INFO "TMCC(1)Val(%x)\n", val);
+	PT1_PRINTK(1, KERN_INFO, "TMCC(1)Val(%x)\n", val);
 
 	for(lp = 0 ; lp < 100 ; lp++){
 		memcpy(&wk, &isdb_t_tmcc_read_2, sizeof(WBLOCK));
@@ -572,27 +572,27 @@ int		isdb_t_tune(void __iomem *regs, struct mutex *lock, int addr, int channel, 
 			break ;
 		}
 	}
-	printk(KERN_INFO "TMCC(2)Val(%x)\n", val);
+	PT1_PRINTK(1, KERN_INFO, "TMCC(2)Val(%x)\n", val);
 
 	memcpy(&wk, &isdb_t_cn_1, sizeof(WBLOCK));
 	wk.addr = addr;
 	val = i2c_read(regs, lock, &wk, 1);
-	printk(KERN_INFO "CN(1)Val(%x)\n", val);
+	PT1_PRINTK(1, KERN_INFO, "CN(1)Val(%x)\n", val);
 
 	memcpy(&wk, &isdb_t_cn_2, sizeof(WBLOCK));
 	wk.addr = addr;
 	val = i2c_read(regs, lock, &wk, 1);
-	printk(KERN_INFO "CN(2)Val(%x)\n", val);
+	PT1_PRINTK(1, KERN_INFO, "CN(2)Val(%x)\n", val);
 
 	memcpy(&wk, &isdb_t_agc_1, sizeof(WBLOCK));
 	wk.addr = addr;
 	val = i2c_read(regs, lock, &wk, 1);
-	printk(KERN_INFO "AGC(1)Val(%x)\n", val);
+	PT1_PRINTK(1, KERN_INFO, "AGC(1)Val(%x)\n", val);
 
 	memcpy(&wk, &isdb_t_agc_2, sizeof(WBLOCK));
 	wk.addr = addr;
 	val = i2c_read(regs, lock, &wk, 1);
-	printk(KERN_INFO "AGC(2)Val(%x)\n", val);
+	PT1_PRINTK(1, KERN_INFO, "AGC(2)Val(%x)\n", val);
 	return 0;
 }
 #endif

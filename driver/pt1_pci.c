@@ -60,13 +60,13 @@ MODULE_AUTHOR("Tomoaki Ishikawa tomy@users.sourceforge.jp and Yoshiki Yazawa yaz
 MODULE_DESCRIPTION(DRIVER_DESC);
 MODULE_LICENSE("GPL");
 
-static int debug = 7;			/* 1 normal messages, 0 quiet .. 7 verbose. */
+int debug = 7;				/* 1 normal messages, 0 quiet .. 7 verbose. */
 static int lnb = 0;			/* LNB OFF:0 +11V:1 +15V:2 */
 
-module_param(debug, int, 0);
+module_param(debug, int, S_IRUGO | S_IWUSR);
 module_param(lnb, int, 0);
-MODULE_PARM_DESC(debug, "debug level (1-2)");
-MODULE_PARM_DESC(debug, "LNB level (0:OFF 1:+11V 2:+15V)");
+MODULE_PARM_DESC(debug, "debug level (1-7)");
+MODULE_PARM_DESC(lnb, "LNB level (0:OFF 1:+11V 2:+15V)");
 
 #define VENDOR_EARTHSOFT 0x10ee
 #define PCI_PT1_ID 0x211a
@@ -206,7 +206,7 @@ static	int		pt1_thread(void *data)
 
 	set_freezable();
 	reset_dma(dev_conf);
-	printk(KERN_INFO "pt1_thread run\n");
+	PT1_PRINTK(0, KERN_INFO, "pt1_thread run\n");
 
 	for(;;){
 		if(kthread_should_stop()){
@@ -227,7 +227,7 @@ static	int		pt1_thread(void *data)
 				dma_channel = ((micro.packet.head >> 5) & 0x07);
 				//チャネル情報不正
 				if(dma_channel > MAX_CHANNEL){
-					printk(KERN_ERR "DMA Channel Number Error(%d)\n", dma_channel);
+					PT1_PRINTK(0, KERN_ERR, "DMA Channel Number Error(%d)\n", dma_channel);
 					continue ;
 				}
 				chno = real_channel[(((micro.packet.head >> 5) & 0x07) - 1)];
@@ -386,7 +386,8 @@ static int pt1_release(struct inode *inode, struct file *file)
 	mutex_lock(&channel->ptr->lock);
 	SetStream(channel->ptr->regs, channel->channel, FALSE);
 	channel->valid = FALSE ;
-	printk(KERN_INFO "(%d:%d)Drop=%08d:%08d:%08d:%08d\n", imajor(inode), iminor(inode), channel->drop,
+	if (channel->drop || channel->overflow || channel->counetererr || channel->transerr)
+	PT1_PRINTK(0, KERN_INFO, "(%d:%d)Drop=%08d:%08d:%08d:%08d\n", imajor(inode), iminor(inode), channel->drop,
 						channel->overflow, channel->counetererr, channel->transerr);
 	channel->overflow = 0 ;
 	channel->counetererr = 0 ;
@@ -469,18 +470,18 @@ static	int		SetFreq(PT1_CHANNEL *channel, FREQUENCY *freq)
 				}
 
 #if 0
-				printk(KERN_INFO "clockmargin = (%x)\n", (tmcc.clockmargin & 0xFF));
-				printk(KERN_INFO "carriermargin  = (%x)\n", (tmcc.carriermargin & 0xFF));
+				PT1_PRINTK(7, KERN_DEBUG, "clockmargin = (%x)\n", (tmcc.clockmargin & 0xFF));
+				PT1_PRINTK(7, KERN_DEBUG, "carriermargin  = (%x)\n", (tmcc.carriermargin & 0xFF));
 				{
 					int lp;
 					for(lp = 0 ; lp < MAX_BS_TS_ID ; lp++){
 						if(tmcc.ts_id[lp].ts_id == 0xFFFF){
 							continue ;
 						}
-						printk(KERN_INFO "Slot(%d:%x)\n", lp, tmcc.ts_id[lp].ts_id);
-						printk(KERN_INFO "mode (low/high) = (%x:%x)\n",
+						PT1_PRINTK(7, KERN_DEBUG, "Slot(%d:%x)\n", lp, tmcc.ts_id[lp].ts_id);
+						PT1_PRINTK(7, KERN_DEBUG, "mode (low/high) = (%x:%x)\n",
 							   tmcc.ts_id[lp].low_mode, tmcc.ts_id[lp].high_mode);
-						printk(KERN_INFO "slot (low/high) = (%x:%x)\n",
+						PT1_PRINTK(7, KERN_DEBUG, "slot (low/high) = (%x:%x)\n",
 							   tmcc.ts_id[lp].low_slot,
 							   tmcc.ts_id[lp].high_slot);
 					}
@@ -517,7 +518,7 @@ static int count_used_bs_tuners(PT1_DEVICE *device)
 			count++;
 	}
 
-	printk(KERN_INFO "used bs tuners on %p = %d\n", device, count);
+	PT1_PRINTK(1, KERN_INFO, "used bs tuners on %p = %d\n", device, count);
 	return count;
 }
 
@@ -565,14 +566,14 @@ static long pt1_do_ioctl(struct file  *file, unsigned int cmd, unsigned long arg
 				lnb_usr = (int)arg0;
 				lnb_eff = lnb_usr ? lnb_usr : lnb;
 				settuner_reset(channel->ptr->regs, channel->ptr->cardtype, lnb_eff, TUNER_POWER_ON_RESET_DISABLE);
-				printk(KERN_INFO "PT1:LNB on %s\n", voltage[lnb_eff]);
+				PT1_PRINTK(1, KERN_INFO, "LNB on %s\n", voltage[lnb_eff]);
 			}
 			return 0 ;
 		case LNB_DISABLE:
 			count = count_used_bs_tuners(channel->ptr);
 			if(count <= 1) {
 				settuner_reset(channel->ptr->regs, channel->ptr->cardtype, LNB_OFF, TUNER_POWER_ON_RESET_DISABLE);
-				printk(KERN_INFO "PT1:LNB off\n");
+				PT1_PRINTK(1, KERN_INFO, "LNB off\n");
 			}
 			return 0 ;
 	}
@@ -650,7 +651,7 @@ int		pt1_makering(struct pci_dev *pdev, PT1_DEVICE *dev_conf)
 		for(lp2 = 0 ; lp2 < DMA_RING_MAX ; lp2++){
 			dmaptr = pci_alloc_consistent(pdev, DMA_SIZE, &dmactl->ring_dma[lp2]);
 			if(dmaptr == NULL){
-				printk(KERN_INFO "PT1:DMA ALLOC ERROR\n");
+				PT1_PRINTK(0, KERN_ERR, "DMA ALLOC ERROR\n");
 				return -1 ;
 			}
 			dmactl->data[lp2] = dmaptr ;
@@ -672,7 +673,7 @@ int		pt1_dma_init(struct pci_dev *pdev, PT1_DEVICE *dev_conf)
 	for(lp = 0 ; lp < DMA_RING_SIZE ; lp++){
 		ptr = pci_alloc_consistent(pdev, DMA_SIZE, &dev_conf->ring_dma[lp]);
 		if(ptr == NULL){
-			printk(KERN_INFO "PT1:DMA ALLOC ERROR\n");
+			PT1_PRINTK(0, KERN_ERR, "DMA ALLOC ERROR\n");
 			return -1 ;
 		}
 		dev_conf->dmaptr[lp] = ptr ;
@@ -722,25 +723,25 @@ static int pt1_pci_init_one (struct pci_dev *pdev,
 		return rc;
 	rc = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
 	if (rc) {
-		printk(KERN_ERR "PT1:DMA MASK ERROR");
+		PT1_PRINTK(0, KERN_ERR, "DMA MASK ERROR");
 		return rc;
 	}
 
 	pci_read_config_word(pdev, PCI_COMMAND, &cmd);
 	if (!(cmd & PCI_COMMAND_MASTER)) {
-		printk(KERN_INFO "Attempting to enable Bus Mastering\n");
+		PT1_PRINTK(0, KERN_INFO, "Attempting to enable Bus Mastering\n");
 		pci_set_master(pdev);
 		pci_read_config_word(pdev, PCI_COMMAND, &cmd);
 		if (!(cmd & PCI_COMMAND_MASTER)) {
-			printk(KERN_ERR "Bus Mastering is not enabled\n");
+			PT1_PRINTK(0, KERN_ERR, "Bus Mastering is not enabled\n");
 			return -EIO;
 		}
 	}
-	printk(KERN_INFO "Bus Mastering Enabled.\n");
+	PT1_PRINTK(0, KERN_INFO, "Bus Mastering Enabled.\n");
 
 	dev_conf = kzalloc(sizeof(PT1_DEVICE), GFP_KERNEL);
 	if(!dev_conf){
-		printk(KERN_ERR "PT1:out of memory !");
+		PT1_PRINTK(0, KERN_ERR, "out of memory !");
 		return -ENOMEM ;
 	}
 	for (i = 0; i < DMA_RING_SIZE; i++) {
@@ -751,7 +752,7 @@ static int pt1_pci_init_one (struct pci_dev *pdev,
 				kfree(dev_conf->dmactl[j]);
 			}
 			kfree(dev_conf);
-			printk(KERN_ERR "PT1:out of memory !");
+			PT1_PRINTK(0, KERN_ERR, "out of memory !");
 			return -ENOMEM ;
 		}
 	}
@@ -772,18 +773,18 @@ static int pt1_pci_init_one (struct pci_dev *pdev,
 	dev_conf->mmio_len = pci_resource_len(pdev, 0);
 	dummy = request_mem_region(dev_conf->mmio_start, dev_conf->mmio_len, DEV_NAME);
 	if (!dummy) {
-		printk(KERN_ERR "PT1:cannot request iomem  (0x%llx).\n", (unsigned long long) dev_conf->mmio_start);
+		PT1_PRINTK(0, KERN_ERR, "cannot request iomem  (0x%llx).\n", (unsigned long long) dev_conf->mmio_start);
 		goto out_err_regbase;
 	}
 
 	dev_conf->regs = ioremap(dev_conf->mmio_start, dev_conf->mmio_len);
 	if (!dev_conf->regs){
-		printk(KERN_ERR "pt1:Can't remap register area.\n");
+		PT1_PRINTK(0, KERN_ERR, "Can't remap register area.\n");
 		goto out_err_regbase;
 	}
 	// 初期化処理
 	if(xc3s_init(dev_conf->regs, dev_conf->cardtype)){
-		printk(KERN_ERR "Error xc3s_init\n");
+		PT1_PRINTK(0, KERN_ERR, "Error xc3s_init\n");
 		goto out_err_fpga;
 	}
 	// チューナリセット
@@ -798,7 +799,7 @@ static int pt1_pci_init_one (struct pci_dev *pdev,
 	for(lp = 0 ; lp < MAX_TUNER ; lp++){
 		rc = tuner_init(dev_conf->regs, dev_conf->cardtype, &dev_conf->lock, lp);
 		if(rc < 0){
-			printk(KERN_ERR "Error tuner_init\n");
+			PT1_PRINTK(0, KERN_ERR, "Error tuner_init\n");
 			goto out_err_fpga;
 		}
 	}
@@ -820,7 +821,7 @@ static int pt1_pci_init_one (struct pci_dev *pdev,
 	minor = MINOR(dev_conf->dev) ;
 	dev_conf->base_minor = minor ;
 	for(lp = 0 ; lp < MAX_PCI_DEVICE ; lp++){
-		printk(KERN_INFO "PT1:device[%d]=%p\n", lp, device[lp]);
+		PT1_PRINTK(1, KERN_INFO, "device[%d]=%p\n", lp, device[lp]);
 		if(device[lp] == NULL){
 			device[lp] = dev_conf ;
 			dev_conf->card_number = lp;
@@ -834,7 +835,7 @@ static int pt1_pci_init_one (struct pci_dev *pdev,
 			 MKDEV(MAJOR(dev_conf->dev), (MINOR(dev_conf->dev) + lp)), 1);
 		channel = kzalloc(sizeof(PT1_CHANNEL), GFP_KERNEL);
 		if(!channel){
-			printk(KERN_ERR "PT1:out of memory !");
+			PT1_PRINTK(0, KERN_ERR, "out of memory !");
 			return -ENOMEM ;
 		}
 
@@ -871,7 +872,7 @@ static int pt1_pci_init_one (struct pci_dev *pdev,
 			goto out_err_v4l;
 		}
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,27)
-		printk(KERN_INFO "PT1:card_number = %d\n",
+		PT1_PRINTK(1, KERN_INFO, "card_number = %d\n",
 		       dev_conf->card_number);
 		device_create(pt1video_class,
 			      NULL,
@@ -1018,7 +1019,7 @@ static struct pci_driver pt1_driver = {
 
 static int __init pt1_pci_init(void)
 {
-	printk(KERN_INFO "%s", version);
+	PT1_PRINTK(0, KERN_INFO, "%s", version);
 	pt1video_class = class_create(THIS_MODULE, DRIVERNAME);
 	if (IS_ERR(pt1video_class))
 		return PTR_ERR(pt1video_class);
