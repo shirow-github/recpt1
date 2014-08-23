@@ -60,7 +60,7 @@ MODULE_AUTHOR("Tomoaki Ishikawa tomy@users.sourceforge.jp and Yoshiki Yazawa yaz
 MODULE_DESCRIPTION(DRIVER_DESC);
 MODULE_LICENSE("GPL");
 
-int debug = 7;				/* 1 normal messages, 0 quiet .. 7 verbose. */
+int debug = 0;				/* 1 normal messages, 0 quiet .. 7 verbose. */
 static int lnb = 0;			/* LNB OFF:0 +11V:1 +15V:2 */
 
 module_param(debug, int, S_IRUGO | S_IWUSR);
