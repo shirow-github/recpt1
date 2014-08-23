@@ -1,16 +1,16 @@
 【dkmsでのインストール方法】
 
 su
-cp -a driver/ /usr/src/pt1_drv-1.1.0
-dkms add -m pt1_drv -v 1.1.0
-dkms build -m pt1_drv -v 1.1.0
-dkms install -m pt1_drv -v 1.1.0
+cp -a driver/ /usr/src/pt1_drv-1.1.1
+dkms add -m pt1_drv -v 1.1.1
+dkms build -m pt1_drv -v 1.1.1
+dkms install -m pt1_drv -v 1.1.1
 reboot
 
 
 【dkmsでのアンインストール方法】
 
 su
-dkms remove -m pt1_drv -v 1.1.0 --all
-rm -vrf /usr/src/pt1_drv-1.1.0
+dkms remove -m pt1_drv -v 1.1.1 --all
+rm -vrf /usr/src/pt1_drv-1.1.1
 reboot
