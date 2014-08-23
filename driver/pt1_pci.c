@@ -44,12 +44,15 @@ typedef struct pm_message {
 #include	"pt1_tuner_data.h"
 #include	"pt1_ioctl.h"
 
-/* These identify the driver base version and may not be removed. */
-#if LINUX_VERSION_CODE < KERNEL_VERSION(3,8,0)
-static char version[] __devinitdata =
-#else
-static char version[] =
+#if LINUX_VERSION_CODE > KERNEL_VERSION(3,8,0)
+#define __devinit
+#define __devinitdata
+#define __devexit
+#define __devexit_p
 #endif
+
+/* These identify the driver base version and may not be removed. */
+static char version[] __devinitdata =
 DRV_NAME ".c: " DRV_VERSION " " DRV_RELDATE " \n";
 
 MODULE_AUTHOR("Tomoaki Ishikawa tomy@users.sourceforge.jp and Yoshiki Yazawa yaz@honeyplanet.jp");
