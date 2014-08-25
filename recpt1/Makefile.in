@@ -8,7 +8,7 @@ TARGET = recpt1
 TARGET2 = recpt1ctl
 TARGET3 = checksignal
 TARGETS = $(TARGET) $(TARGET2) $(TARGET3)
-RELEASE_VERSION = "b14397800eae_with_http_server_RC4 by stz2012"
+RELEASE_VERSION = "61ff9cabf962_with_http_server_RC4 by shirow-github"
 
 CPPFLAGS = -I../driver -Wall -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 CFLAGS   = -O2 -g -pthread
@@ -50,7 +50,7 @@ $(DEPEND): version.h
 version.h:
 	revh="`git rev-list HEAD | wc -l 2> /dev/null`"; \
 	if [ -n "$$revh" ] && [ "$$revh" != "0" ] ; then \
-		echo "const char *version = \"rev.$$revh by stz2012\";" > $@; \
+		echo "const char *version = \"rev.$$revh by shirow-github\";" > $@; \
 	else \
 		echo "const char *version = \"$(RELEASE_VERSION)\";" > $@; \
 	fi
