@@ -3,14 +3,14 @@
 /***************************************************************************/
 /*                                                                         */
 /***************************************************************************/
-#define		PT1_MAX_ISDB_S_INIT	19			// ISDB-S åˆæœŸåŒ–ãƒ‡ãƒ¼ã‚¿æ•°
-#define		PT1_MAX_ISDB_T_INIT	16			// ISDB-T åˆæœŸåŒ–ãƒ‡ãƒ¼ã‚¿æ•°
-#define		PT2_MAX_ISDB_S_INIT 	18			// ISDB-S åˆæœŸåŒ–ãƒ‡ãƒ¼ã‚¿æ•°
-#define		PT2_MAX_ISDB_T_INIT 	12			// ISDB-T åˆæœŸåŒ–ãƒ‡ãƒ¼ã‚¿æ•°
+#define		PT1_MAX_ISDB_S_INIT	19			// ISDB-S ½é´ü²½¥Ç¡¼¥¿¿ô
+#define		PT1_MAX_ISDB_T_INIT	16			// ISDB-T ½é´ü²½¥Ç¡¼¥¿¿ô
+#define		PT2_MAX_ISDB_S_INIT 	18			// ISDB-S ½é´ü²½¥Ç¡¼¥¿¿ô
+#define		PT2_MAX_ISDB_T_INIT 	12			// ISDB-T ½é´ü²½¥Ç¡¼¥¿¿ô
 
-#define		MAX_BS_CHANNEL		36			// å‘¨æ³¢æ•°ãƒ†ãƒ¼ãƒ–ãƒ«æ•°
-#define		MAX_ISDB_T_CHANNEL	113			// å‘¨æ³¢æ•°ãƒ†ãƒ¼ãƒ–ãƒ«æ•°(åœ°ãƒ‡ã‚¸ã‚¿ãƒ«)
-#define		MAX_BS_CHANNEL_PLL_COMMAND	3	// PLLãƒ­ãƒƒã‚¯ã™ã‚‹ãŸã‚ã®ã‚³ãƒãƒ³ãƒ‰æ•°
+#define		MAX_BS_CHANNEL		36			// ¼şÇÈ¿ô¥Æ¡¼¥Ö¥ë¿ô
+#define		MAX_ISDB_T_CHANNEL	113			// ¼şÇÈ¿ô¥Æ¡¼¥Ö¥ë¿ô(ÃÏ¥Ç¥¸¥¿¥ë)
+#define		MAX_BS_CHANNEL_PLL_COMMAND	3	// PLL¥í¥Ã¥¯¤¹¤ë¤¿¤á¤Î¥³¥Ş¥ó¥É¿ô
 /***************************************************************************/
 /*                                                                         */
 /***************************************************************************/
@@ -25,22 +25,22 @@ typedef	struct	_WBLOCK_BS_PLL{
 /***************************************************************************/
 /*                                                                         */
 /***************************************************************************/
-extern	WBLOCK	com_initdata;		//åˆæœŸåŒ–(å…±é€š)
-extern	WBLOCK	isdb_s_init1;		//ISDB-Så…ˆé ­
-extern	WBLOCK	isdb_s_init21;		//ISDB-Sæœ€çµ‚
-extern	WBLOCK	isdb_t_init17;		//ISDB-Tæœ€çµ‚
-extern	WBLOCK	bs_pll_lock;		//ISDB-S PLLãƒ­ãƒƒã‚¯ç¢ºèª
+extern	WBLOCK	com_initdata;		//½é´ü²½(¶¦ÄÌ)
+extern	WBLOCK	isdb_s_init1;		//ISDB-SÀèÆ¬
+extern	WBLOCK	isdb_s_init21;		//ISDB-SºÇ½ª
+extern	WBLOCK	isdb_t_init17;		//ISDB-TºÇ½ª
+extern	WBLOCK	bs_pll_lock;		//ISDB-S PLL¥í¥Ã¥¯³ÎÇ§
 extern	WBLOCK	*isdb_s_initial_pt1[PT1_MAX_ISDB_S_INIT];
 extern	WBLOCK	*isdb_t_initial_pt1[PT1_MAX_ISDB_T_INIT];
 extern	WBLOCK	*isdb_s_initial_pt2[PT2_MAX_ISDB_S_INIT];
 extern	WBLOCK	*isdb_t_initial_pt2[PT2_MAX_ISDB_T_INIT];
 /***************************************************************************/
-/* BSç”¨ãƒ‡ãƒ¼ã‚¿å®šç¾©                                                          */
+/* BSÍÑ¥Ç¡¼¥¿ÄêµÁ                                                          */
 /***************************************************************************/
-extern	WBLOCK_BS_PLL	bs_pll[MAX_BS_CHANNEL] ;	// å‘¨æ³¢æ•°ãƒ†ãƒ¼ãƒ–ãƒ«
-extern	WBLOCK	*bs_get_ts_id[(MAX_BS_TS_ID / 2)] ;	// TS-IDå–å¾—ãƒ†ãƒ¼ãƒ–ãƒ«
-extern	WBLOCK	bs_tmcc_get_1;						// TMCCå–å¾—ãƒ†ãƒ¼ãƒ–ãƒ«
-extern	WBLOCK	bs_tmcc_get_2;						// TMCCå–å¾—ãƒ†ãƒ¼ãƒ–ãƒ«
+extern	WBLOCK_BS_PLL	bs_pll[MAX_BS_CHANNEL] ;	// ¼şÇÈ¿ô¥Æ¡¼¥Ö¥ë
+extern	WBLOCK	*bs_get_ts_id[(MAX_BS_TS_ID / 2)] ;	// TS-ID¼èÆÀ¥Æ¡¼¥Ö¥ë
+extern	WBLOCK	bs_tmcc_get_1;						// TMCC¼èÆÀ¥Æ¡¼¥Ö¥ë
+extern	WBLOCK	bs_tmcc_get_2;						// TMCC¼èÆÀ¥Æ¡¼¥Ö¥ë
 extern	WBLOCK	bs_get_ts_lock;
 extern	WBLOCK	bs_set_ts_lock;
 extern	WBLOCK	bs_get_slot;
@@ -50,9 +50,9 @@ extern	WBLOCK	bs_get_signal1;
 extern	WBLOCK	bs_get_signal2;
 extern	WBLOCK	bs_get_agc;
 /***************************************************************************/
-/* åœ°ãƒ‡ã‚¸ç”¨ãƒ‡ãƒ¼ã‚¿å®šç¾©                                                      */
+/* ÃÏ¥Ç¥¸ÍÑ¥Ç¡¼¥¿ÄêµÁ                                                      */
 /***************************************************************************/
-extern	WBLOCK	isdb_t_pll_base;			// åœ°ãƒ‡ã‚¸ç”¨å‘¨æ³¢æ•°ãƒ†ãƒ¼ãƒ–ãƒ«base
+extern	WBLOCK	isdb_t_pll_base;			// ÃÏ¥Ç¥¸ÍÑ¼şÇÈ¿ô¥Æ¡¼¥Ö¥ëbase
 extern	WBLOCK	isdb_t_pll_lock;
 extern	WBLOCK_BS_PLL	isdb_t_info[MAX_ISDB_T_INFO_LEN];
 extern	WBLOCK	isdb_t_check_tune;
@@ -67,7 +67,7 @@ extern	WBLOCK	isdb_t_get_clock;
 extern	WBLOCK	isdb_t_get_carrir;
 
 /***************************************************************************/
-/* çœé›»åŠ›ç”¨ãƒ‡ãƒ¼ã‚¿å®šç¾©                                                      */
+/* ¾ÊÅÅÎÏÍÑ¥Ç¡¼¥¿ÄêµÁ                                                      */
 /***************************************************************************/
 extern	WBLOCK	isdb_s_wake;
 extern	WBLOCK	isdb_t_wake;

@@ -1,15 +1,15 @@
 #ifndef		__PT1_TUNER_H__
 #define		__PT1_TUNER_H__
 /***************************************************************************/
-/* チューナ状態定義                                                        */
+/* ���塼�ʾ������                                                        */
 /***************************************************************************/
-// SLEEPモード設定
+// SLEEP�⡼������
 enum	{
 	TYPE_SLEEP,
 	TYPE_WAKEUP
 };
 
-// チューナパワーモード設定
+// ���塼�ʥѥ�⡼������
 enum {
 	BIT_TUNER,
 	BIT_LNB_UP,
@@ -22,17 +22,17 @@ enum {
 	BIT_5A2
 };
 
-// LNBパワー設定
+// LNB�ѥ����
 enum{
 	LNB_OFF,						// LNB OFF
 	LNB_11V,						// +11 V
 	LNB_15V							// +15 V
 };
 
-enum{								// 電源／ハードウェアリセット
-	TUNER_POWER_OFF,				// オフ／イネーブル
-	TUNER_POWER_ON_RESET_ENABLE,	// オン／イネーブル
-	TUNER_POWER_ON_RESET_DISABLE	// オン／ディセーブル
+enum{								// �Ÿ����ϡ��ɥ������ꥻ�å�
+	TUNER_POWER_OFF,				// ���ա����͡��֥�
+	TUNER_POWER_ON_RESET_ENABLE,	// ���󡿥��͡��֥�
+	TUNER_POWER_ON_RESET_DISABLE	// ���󡿥ǥ������֥�
 };
 
 enum {
@@ -41,73 +41,73 @@ enum {
 };
 
 /***************************************************************************/
-/* チューナ状態定義                                                        */
+/* ���塼�ʾ������                                                        */
 /***************************************************************************/
-#define		MAX_BS_TS_ID		8			// TS-ID取得最大値
-#define		MAX_ISDB_T_INFO		3			// 地デジ階層情報数
-#define		MAX_ISDB_T_INFO_LEN		2			// 地デジ階層情報数
+#define		MAX_BS_TS_ID		8			// TS-ID����������
+#define		MAX_ISDB_T_INFO		3			// �ϥǥ����ؾ����
+#define		MAX_ISDB_T_INFO_LEN		2			// �ϥǥ����ؾ����
 /***************************************************************************/
-/* ISDB-S状態定義                                                         */
+/* ISDB-S�������                                                         */
 /***************************************************************************/
 typedef struct  _ISDB_S_CH_TABLE{
-	int		channel ;		// 入力チャンネル番号
-	int		real_chno ;		// 実際のテーブル番号
-	int		slotno ;		// スロット番号
+	int		channel ;		// ���ϥ����ͥ��ֹ�
+	int		real_chno ;		// �ºݤΥơ��֥��ֹ�
+	int		slotno ;		// �����å��ֹ�
 }ISDB_S_CH_TABLE ;
 
 /***************************************************************************/
-/* ISDB-S状態定義                                                         */
+/* ISDB-S�������                                                         */
 /***************************************************************************/
 typedef	struct	_ISDB_S_TS_ID{
 	__u16	ts_id ;			// TS-ID
 	__u16	dmy ;			// PAD
-	__u8	low_mode ;		// 低階層 モード
-	__u8	low_slot ;		// 低階層 スロット数
-	__u8	high_mode ;		// 高階層 モード
-	__u8	high_slot ;		// 高階層 スロット数
+	__u8	low_mode ;		// �㳬�� �⡼��
+	__u8	low_slot ;		// �㳬�� �����åȿ�
+	__u8	high_mode ;		// �ⳬ�� �⡼��
+	__u8	high_slot ;		// �ⳬ�� �����åȿ�
 }ISDB_S_TS_ID;
 typedef	struct	_ISDB_S_TMCC{
-	ISDB_S_TS_ID	ts_id[MAX_BS_TS_ID];	// 相対TS番号nに対するTS ID情報
+	ISDB_S_TS_ID	ts_id[MAX_BS_TS_ID];	// ����TS�ֹ�n���Ф���TS ID����
 #if 0
-	__u32	indicator;				// 変更指示 (5ビット)
-	__u32	emergency;				// 起動制御信号 (1ビット)
-	__u32	uplink;					// アップリンク制御情報 (4ビット)
-	__u32	ext;					// 拡張フラグ (1ビット)
-	__u32	extdata[2];				// 拡張領域 (61ビット)
+	__u32	indicator;				// �ѹ��ؼ� (5�ӥå�)
+	__u32	emergency;				// ��ư���濮�� (1�ӥå�)
+	__u32	uplink;					// ���åץ��������� (4�ӥå�)
+	__u32	ext;					// ��ĥ�ե饰 (1�ӥå�)
+	__u32	extdata[2];				// ��ĥ�ΰ� (61�ӥå�)
 #endif
 	__u32	agc ;					// AGC
-	__u32	clockmargin ;			// クロック周波数誤差
-	__u32	carriermargin ;			// キャリア周波数誤差
+	__u32	clockmargin ;			// �����å����ȿ�����
+	__u32	carriermargin ;			// ����ꥢ���ȿ�����
 }ISDB_S_TMCC;
 
-// 階層情報
+// ���ؾ���
 typedef	struct	_ISDB_T_INFO{
-	__u32	mode;				// キャリア変調方式 (3ビット)
-	__u32	rate;				// 畳込み符号化率 (3ビット)
-	__u32	interleave;			// インターリーブ長 (3ビット)
-	__u32	segment; 			// セグメント数 (4ビット)
+	__u32	mode;				// ����ꥢ��Ĵ���� (3�ӥå�)
+	__u32	rate;				// ��������沽Ψ (3�ӥå�)
+	__u32	interleave;			// ���󥿡��꡼��Ĺ (3�ӥå�)
+	__u32	segment; 			// �������ȿ� (4�ӥå�)
 }ISDB_T_INFO;
 
 typedef	struct	_ISDB_T_TMCC {
 #if 0
-	__u32	sysid;		// システム識別 (2ビット)
-	__u32	indicator;	// 伝送パラメータ切り替え指標 (4ビット)
-	__u32	emergency;	// 緊急警報放送用起動フラグ (1ビット)
+	__u32	sysid;		// �����ƥ༱�� (2�ӥå�)
+	__u32	indicator;	// �����ѥ�᡼���ڤ��ؤ���ɸ (4�ӥå�)
+	__u32	emergency;	// �۵޷��������ѵ�ư�ե饰 (1�ӥå�)
 #endif
 	ISDB_T_INFO	info[MAX_ISDB_T_INFO];
 #if 0
-						// カレント情報
-	__u32	partial;	// 部分受信フラグ (1ビット)
-	__u32	Phase;		// 連結送信位相補正量 (3ビット)
-	__u32	Reserved;	// リザーブ (12ビット)
+						// �����Ⱦ���
+	__u32	partial;	// ��ʬ�����ե饰 (1�ӥå�)
+	__u32	Phase;		// Ϣ���������������� (3�ӥå�)
+	__u32	Reserved;	// �ꥶ���� (12�ӥå�)
 #endif
 	__u32	cn[2] ;					// CN
 	__u32	agc ;					// AGC
-	__u32	clockmargin ;			// クロック周波数誤差
-	__u32	carriermargin ;			// キャリア周波数誤差
+	__u32	clockmargin ;			// �����å����ȿ�����
+	__u32	carriermargin ;			// ����ꥢ���ȿ�����
 }ISDB_T_TMCC;
 /***************************************************************************/
-/* チューナ状態定義                                                        */
+/* ���塼�ʾ������                                                        */
 /***************************************************************************/
 extern	void	settuner_reset(void __iomem *, int, __u32, __u32);
 extern	int		tuner_init(void __iomem *, int, struct mutex *, int);

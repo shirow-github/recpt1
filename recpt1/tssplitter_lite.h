@@ -44,7 +44,7 @@ typedef struct pmt_version {
 } pmt_version;
 
 /**
- * splitteræ§‹é€ ä½“
+ * splitter¹½Â¤ÂÎ
  */
 typedef struct splitter {
 	unsigned char	pids[MAX_PID];
@@ -57,8 +57,8 @@ typedef struct splitter {
 	int avail_pmts[MAX_SERVICES];
 	pmt_version pmt_version[MAX_SERVICES];
 	int num_pmts;
-	uint16_t section_remain[MAX_PID];	// ã‚»ã‚¯ã‚·ãƒ§ãƒ³æ®‹ã‚Šãƒã‚¤ãƒˆæ•°
-	uint8_t packet_seq[MAX_PID];	// å·¡å›ã‚«ã‚¦ãƒ³ã‚¿
+	uint16_t section_remain[MAX_PID];	// ¥»¥¯¥·¥ç¥ó»Ä¤ê¥Ğ¥¤¥È¿ô
+	uint8_t packet_seq[MAX_PID];	// ½ä²ó¥«¥¦¥ó¥¿
 } splitter;
 
 typedef struct _splitbuf_t

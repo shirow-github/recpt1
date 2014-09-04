@@ -1,23 +1,23 @@
 #ifndef		__PT1_COM_H__
 #define		__PT1_COM_H__
 /***************************************************************************/
-/* I2Cデータ位置定義                                                       */
+/* I2C�ǡ����������                                                       */
 /***************************************************************************/
-#define		MAX_CHANNEL			4		// チャネル数
+#define		MAX_CHANNEL			4		// ����ͥ��
 #define		FALSE		0
 #define		TRUE		1
-#define		MAX_TUNER			2		//チューナ数
+#define		MAX_TUNER			2		//���塼�ʿ�
 enum{
 	CHANNEL_TYPE_ISDB_S,
 	CHANNEL_TYPE_ISDB_T,
 	CHANNEL_TYPE_MAX
 };
 /***************************************************************************/
-/* 状態                                                                    */
+/* ����                                                                    */
 /***************************************************************************/
 enum{
-	STATE_STOP,			// 初期化直後
-	STATE_START,		// 通常
-	STATE_FULL			// ストッパー
+	STATE_STOP,			// �����ľ��
+	STATE_START,		// �̾�
+	STATE_FULL			// ���ȥåѡ�
 };
 #endif

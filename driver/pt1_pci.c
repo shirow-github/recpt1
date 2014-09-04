@@ -80,18 +80,18 @@ static struct pci_device_id pt1_pci_tbl[] = {
 MODULE_DEVICE_TABLE(pci, pt1_pci_tbl);
 #define		DEV_NAME	"pt1video"
 
-#define		PACKET_SIZE			188		// 1ãƒ‘ã‚±ãƒƒãƒˆé•·
-#define		MAX_READ_BLOCK	4			// 1åº¦ã«èª­ã¿å‡ºã™æœ€å¤§DMAãƒãƒƒãƒ•ã‚¡æ•°
-#define		MAX_PCI_DEVICE		128		// æœ€å¤§64æš
-#define		DMA_SIZE	4096			// DMAãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º
+#define		PACKET_SIZE			188		// 1¥Ñ¥±¥Ã¥ÈÄ¹
+#define		MAX_READ_BLOCK	4			// 1ÅÙ¤ËÆÉ¤ß½Ğ¤¹ºÇÂçDMA¥Ğ¥Ã¥Õ¥¡¿ô
+#define		MAX_PCI_DEVICE		128		// ºÇÂç64Ëç
+#define		DMA_SIZE	4096			// DMA¥Ğ¥Ã¥Õ¥¡¥µ¥¤¥º
 #define		DMA_RING_SIZE	128			// number of DMA RINGS
-#define		DMA_RING_MAX	511			// number of DMA entries in a RING(1023ã¯NGã§511ã¾ã§)
-#define		CHANNEL_DMA_SIZE	(2*1024*1024)	// åœ°ãƒ‡ã‚¸ç”¨(16Mbps)
-#define		BS_CHANNEL_DMA_SIZE	(4*1024*1024)	// BSç”¨(32Mbps)
+#define		DMA_RING_MAX	511			// number of DMA entries in a RING(1023¤ÏNG¤Ç511¤Ş¤Ç)
+#define		CHANNEL_DMA_SIZE	(2*1024*1024)	// ÃÏ¥Ç¥¸ÍÑ(16Mbps)
+#define		BS_CHANNEL_DMA_SIZE	(4*1024*1024)	// BSÍÑ(32Mbps)
 #define		READ_SIZE	(16*DMA_SIZE)
 
 typedef	struct	_DMA_CONTROL{
-	dma_addr_t	ring_dma[DMA_RING_MAX] ;	// DMAæƒ…å ±
+	dma_addr_t	ring_dma[DMA_RING_MAX] ;	// DMA¾ğÊó
 	__u32		*data[DMA_RING_MAX];
 }DMA_CONTROL;
 
@@ -102,7 +102,7 @@ typedef	struct	_pt1_device{
 	__u32			mmio_len ;
 	void __iomem		*regs;
 	struct mutex		lock ;
-	dma_addr_t		ring_dma[DMA_RING_SIZE] ;	// DMAæƒ…å ±
+	dma_addr_t		ring_dma[DMA_RING_SIZE] ;	// DMA¾ğÊó
 	void			*dmaptr[DMA_RING_SIZE] ;
 	struct	task_struct	*kthread;
 	dev_t			dev ;
@@ -121,29 +121,29 @@ typedef	struct	_MICRO_PACKET{
 }MICRO_PACKET;
 
 struct	_PT1_CHANNEL{
-	__u32			valid ;			// ä½¿ç”¨ä¸­ãƒ•ãƒ©ã‚°
-	__u32			address ;		// I2Cã‚¢ãƒ‰ãƒ¬ã‚¹
-	__u32			channel ;		// ãƒãƒ£ãƒãƒ«ç•ªå·
-	int			type ;			// ãƒãƒ£ãƒãƒ«ã‚¿ã‚¤ãƒ—
-	__u32			packet_size ;	// ãƒ‘ã‚±ãƒƒãƒˆã‚µã‚¤ã‚º
-	__u32			drop ;			// ãƒ‘ã‚±ãƒƒãƒˆãƒ‰ãƒ­ãƒƒãƒ—æ•°
-	struct mutex		lock ;			// CHåˆ¥mutex_lockç”¨
-	__u32			size ;			// DMAã•ã‚ŒãŸã‚µã‚¤ã‚º
-	__u32			maxsize ;		// DMAç”¨ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º
-	__u32			bufsize ;		// ãƒãƒ£ãƒãƒ«ã«å‰²ã‚ŠæŒ¯ã‚‰ã‚ŒãŸã‚µã‚¤ã‚º
-	__u32			overflow ;		// ã‚ªãƒ¼ãƒãƒ¼ãƒ•ãƒ­ãƒ¼ã‚¨ãƒ©ãƒ¼ç™ºç”Ÿ
-	__u32			counetererr ;	// è»¢é€ã‚«ã‚¦ãƒ³ã‚¿ï¼‘ã‚¨ãƒ©ãƒ¼
-	__u32			transerr ;		// è»¢é€ã‚¨ãƒ©ãƒ¼
-	__u32			minor ;			// ãƒã‚¤ãƒŠãƒ¼ç•ªå·
-	__u8			*buf;			// CHåˆ¥å—ä¿¡ãƒ¡ãƒ¢ãƒª
+	__u32			valid ;			// »ÈÍÑÃæ¥Õ¥é¥°
+	__u32			address ;		// I2C¥¢¥É¥ì¥¹
+	__u32			channel ;		// ¥Á¥ã¥Í¥ëÈÖ¹æ
+	int			type ;			// ¥Á¥ã¥Í¥ë¥¿¥¤¥×
+	__u32			packet_size ;	// ¥Ñ¥±¥Ã¥È¥µ¥¤¥º
+	__u32			drop ;			// ¥Ñ¥±¥Ã¥È¥É¥í¥Ã¥×¿ô
+	struct mutex		lock ;			// CHÊÌmutex_lockÍÑ
+	__u32			size ;			// DMA¤µ¤ì¤¿¥µ¥¤¥º
+	__u32			maxsize ;		// DMAÍÑ¥Ğ¥Ã¥Õ¥¡¥µ¥¤¥º
+	__u32			bufsize ;		// ¥Á¥ã¥Í¥ë¤Ë³ä¤ê¿¶¤é¤ì¤¿¥µ¥¤¥º
+	__u32			overflow ;		// ¥ª¡¼¥Ğ¡¼¥Õ¥í¡¼¥¨¥é¡¼È¯À¸
+	__u32			counetererr ;	// Å¾Á÷¥«¥¦¥ó¥¿£±¥¨¥é¡¼
+	__u32			transerr ;		// Å¾Á÷¥¨¥é¡¼
+	__u32			minor ;			// ¥Ş¥¤¥Ê¡¼ÈÖ¹æ
+	__u8			*buf;			// CHÊÌ¼õ¿®¥á¥â¥ê
 	__u32			pointer;
-	__u8			req_dma ;		// æº¢ã‚ŒãŸãƒãƒ£ãƒãƒ«
-	__u8			packet_buf[PACKET_SIZE] ;		// æº¢ã‚ŒãŸãƒãƒ£ãƒãƒ«
-	PT1_DEVICE		*ptr ;			// ã‚«ãƒ¼ãƒ‰åˆ¥æƒ…å ±
+	__u8			req_dma ;		// °î¤ì¤¿¥Á¥ã¥Í¥ë
+	__u8			packet_buf[PACKET_SIZE] ;		// °î¤ì¤¿¥Á¥ã¥Í¥ë
+	PT1_DEVICE		*ptr ;			// ¥«¡¼¥ÉÊÌ¾ğÊó
 	wait_queue_head_t	wait_q ;	// for poll on reading
 };
 
-// I2Cã‚¢ãƒ‰ãƒ¬ã‚¹(video0, 1 = ISDB-S) (video2, 3 = ISDB-T)
+// I2C¥¢¥É¥ì¥¹(video0, 1 = ISDB-S) (video2, 3 = ISDB-T)
 int		i2c_address[MAX_CHANNEL] = {T0_ISDB_S, T1_ISDB_S, T0_ISDB_T, T1_ISDB_T};
 int		real_channel[MAX_CHANNEL] = {0, 2, 1, 3};
 int		channeltype[MAX_CHANNEL] = {CHANNEL_TYPE_ISDB_S, CHANNEL_TYPE_ISDB_S,
@@ -164,25 +164,25 @@ static	void	reset_dma(PT1_DEVICE *dev_conf)
 	int		data_pos = 0 ;
 	__u32	*dataptr ;
 
-	// ãƒ‡ãƒ¼ã‚¿åˆæœŸåŒ–
+	// ¥Ç¡¼¥¿½é´ü²½
 	for(ring_pos = 0 ; ring_pos < DMA_RING_SIZE ; ring_pos++){
 		for(data_pos = 0 ; data_pos < DMA_RING_MAX ; data_pos++){
 			dataptr = (dev_conf->dmactl[ring_pos])->data[data_pos];
 			dataptr[(DMA_SIZE / sizeof(__u32)) - 2] = 0;
 		}
 	}
-	// è»¢é€ã‚«ã‚¦ãƒ³ã‚¿ã‚’ãƒªã‚»ãƒƒãƒˆ
+	// Å¾Á÷¥«¥¦¥ó¥¿¤ò¥ê¥»¥Ã¥È
 	writel(0x00000010, dev_conf->regs);
-	// è»¢é€ã‚«ã‚¦ãƒ³ã‚¿ã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
+	// Å¾Á÷¥«¥¦¥ó¥¿¤ò¥¤¥ó¥¯¥ê¥á¥ó¥È
 	for(lp = 0 ; lp < DMA_RING_SIZE ; lp++){
 		writel(0x00000020, dev_conf->regs);
 	}
 
 	addr = (int)dev_conf->ring_dma[0] ;
 	addr >>= 12 ;
-	// DMAãƒãƒƒãƒ•ã‚¡è¨­å®š
+	// DMA¥Ğ¥Ã¥Õ¥¡ÀßÄê
 	writel(addr, dev_conf->regs + DMA_ADDR);
-	// DMAé–‹å§‹
+	// DMA³«»Ï
 	writel(0x0c000040, dev_conf->regs);
 
 }
@@ -215,7 +215,7 @@ static	int		pt1_thread(void *data)
 
 		for(;;){
 			dataptr = (dev_conf->dmactl[ring_pos])->data[data_pos];
-			// ãƒ‡ãƒ¼ã‚¿ã‚ã‚Šï¼Ÿ
+			// ¥Ç¡¼¥¿¤¢¤ê¡©
 			if(dataptr[(DMA_SIZE / sizeof(__u32)) - 2] == 0){
 				break ;
 			}
@@ -225,7 +225,7 @@ static	int		pt1_thread(void *data)
 			for(lp = 0 ; lp < (DMA_SIZE / sizeof(__u32)) ; lp++, dataptr++){
 				micro.val = *dataptr ;
 				dma_channel = ((micro.packet.head >> 5) & 0x07);
-				//ãƒãƒ£ãƒãƒ«æƒ…å ±ä¸æ­£
+				//¥Á¥ã¥Í¥ë¾ğÊóÉÔÀµ
 				if(dma_channel > MAX_CHANNEL){
 					PT1_PRINTK(0, KERN_ERR, "DMA Channel Number Error(%d)\n", dma_channel);
 					continue ;
@@ -233,7 +233,7 @@ static	int		pt1_thread(void *data)
 				chno = real_channel[(((micro.packet.head >> 5) & 0x07) - 1)];
 				packet_pos = ((micro.packet.head >> 2) & 0x07);
 				channel = dev_conf->channel[chno] ;
-				//  ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯
+				//  ¥¨¥é¡¼¥Á¥§¥Ã¥¯
 				if((micro.packet.head & MICROPACKET_ERROR)){
 					val = readl(dev_conf->regs);
 					if((val & BIT_RAM_OVERFLOW)){
@@ -245,24 +245,24 @@ static	int		pt1_thread(void *data)
 					if((val & BIT_INITIATOR_WARNING)){
 						channel->transerr += 1 ;
 					}
-					// åˆæœŸåŒ–ã—ã¦å…ˆé ­ã‹ã‚‰
+					// ½é´ü²½¤·¤ÆÀèÆ¬¤«¤é
 					reset_dma(dev_conf);
 					ring_pos = data_pos = 0 ;
 					break ;
 				}
-				// æœªä½¿ç”¨ãƒãƒ£ãƒãƒ«ã¯æ¨ã¦ã‚‹
+				// Ì¤»ÈÍÑ¥Á¥ã¥Í¥ë¤Ï¼Î¤Æ¤ë
 				if(channel->valid == FALSE){
 					continue ;
 				}
 				mutex_lock(&channel->lock);
-				// ã‚ãµã‚ŒãŸã‚‰èª­ã¿å‡ºã™ã¾ã§å¾…ã¤
+				// ¤¢¤Õ¤ì¤¿¤éÆÉ¤ß½Ğ¤¹¤Ş¤ÇÂÔ¤Ä
 				while(1){
 					if(channel->size >= (channel->maxsize - PACKET_SIZE - 4)){
-						// è©²å½“ãƒãƒ£ãƒ³ãƒãƒ«ã®DMAèª­ã¿ã ã—å¾…ã¡ã«ã™ã‚‹
+						// ³ºÅö¥Á¥ã¥ó¥Í¥ë¤ÎDMAÆÉ¤ß¤À¤·ÂÔ¤Á¤Ë¤¹¤ë
 						wake_up(&channel->wait_q);
 						channel->req_dma = TRUE ;
 						mutex_unlock(&channel->lock);
-						// ã‚¿ã‚¹ã‚¯ã«æ™‚é–“ã‚’æ¸¡ã™ç‚ºä¸­æ–­
+						// ¥¿¥¹¥¯¤Ë»ş´Ö¤òÅÏ¤¹°ÙÃæÃÇ
 						wait_event_timeout(dev_conf->dma_wait_q, (channel->req_dma == FALSE),
 											msecs_to_jiffies(500));
 						mutex_lock(&channel->lock);
@@ -271,32 +271,32 @@ static	int		pt1_thread(void *data)
 						break ;
 					}
 				}
-				// å…ˆé ­ã§ã€ä¸€æ™‚ãƒãƒƒãƒ•ã‚¡ã«æ®‹ã£ã¦ã„ã‚‹å ´åˆ
+				// ÀèÆ¬¤Ç¡¢°ì»ş¥Ğ¥Ã¥Õ¥¡¤Ë»Ä¤Ã¤Æ¤¤¤ë¾ì¹ç
 				if((micro.packet.head & 0x02) &&  (channel->packet_size != 0)){
 					channel->packet_size = 0 ;
 				}
-				// ãƒ‡ãƒ¼ã‚¿ã‚³ãƒ”ãƒ¼
+				// ¥Ç¡¼¥¿¥³¥Ô¡¼
 				channel->packet_buf[channel->packet_size]   = micro.packet.data[2];
 				channel->packet_buf[channel->packet_size+1] = micro.packet.data[1];
 				channel->packet_buf[channel->packet_size+2] = micro.packet.data[0];
 				channel->packet_size += 3;
 
-				// ãƒ‘ã‚±ãƒƒãƒˆãŒå‡ºæ¥ãŸã‚‰ã‚³ãƒ”ãƒ¼ã™ã‚‹
+				// ¥Ñ¥±¥Ã¥È¤¬½ĞÍè¤¿¤é¥³¥Ô¡¼¤¹¤ë
 				if(channel->packet_size >= PACKET_SIZE){
 					if (channel->pointer + channel->size >= channel->maxsize) {
-						// ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®å¢ƒç•Œã‚’è¶Šãˆã¦ã„ã¦ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®å…ˆé ­ã«æˆ»ã£ã¦ã„ã‚‹å ´åˆ
-						// channel->pointer + channel->size - channel->maxsize ã§ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡å…ˆé ­ã‹ã‚‰ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã«ãªã‚‹
+						// ¥ê¥ó¥°¥Ğ¥Ã¥Õ¥¡¤Î¶­³¦¤ò±Û¤¨¤Æ¤¤¤Æ¥ê¥ó¥°¥Ğ¥Ã¥Õ¥¡¤ÎÀèÆ¬¤ËÌá¤Ã¤Æ¤¤¤ë¾ì¹ç
+						// channel->pointer + channel->size - channel->maxsize ¤Ç¥ê¥ó¥°¥Ğ¥Ã¥Õ¥¡ÀèÆ¬¤«¤é¤Î¥¢¥É¥ì¥¹¤Ë¤Ê¤ë
 						memcpy(&channel->buf[channel->pointer + channel->size - channel->maxsize], channel->packet_buf, PACKET_SIZE);
 					} else if (channel->pointer + channel->size + PACKET_SIZE > channel->maxsize) {
-						// ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®å¢ƒç•Œã‚’ã¾ãŸãã‚ˆã†ã«æ›¸ãè¾¼ã¾ã‚Œã‚‹å ´åˆ
-						// ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®å¢ƒç•Œã¾ã§æ›¸ãè¾¼ã¿
+						// ¥ê¥ó¥°¥Ğ¥Ã¥Õ¥¡¤Î¶­³¦¤ò¤Ş¤¿¤°¤è¤¦¤Ë½ñ¤­¹ş¤Ş¤ì¤ë¾ì¹ç
+						// ¥ê¥ó¥°¥Ğ¥Ã¥Õ¥¡¤Î¶­³¦¤Ş¤Ç½ñ¤­¹ş¤ß
 						__u32 tmp_size = channel->maxsize - (channel->pointer + channel->size);
 						memcpy(&channel->buf[channel->pointer + channel->size], channel->packet_buf, tmp_size);
-						// å…ˆé ­ã«æˆ»ã£ã¦æ›¸ãè¾¼ã¿
+						// ÀèÆ¬¤ËÌá¤Ã¤Æ½ñ¤­¹ş¤ß
 						memcpy(channel->buf, &channel->packet_buf[tmp_size], PACKET_SIZE - tmp_size);
 					} else {
-						// ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡å†…ã§åã¾ã‚‹å ´åˆ
-						// é€šå¸¸ã®æ›¸ãè¾¼ã¿
+						// ¥ê¥ó¥°¥Ğ¥Ã¥Õ¥¡Æâ¤Ç¼ı¤Ş¤ë¾ì¹ç
+						// ÄÌ¾ï¤Î½ñ¤­¹ş¤ß
 						memcpy(&channel->buf[channel->pointer + channel->size], channel->packet_buf, PACKET_SIZE);
 					}
 					channel->size += PACKET_SIZE ;
@@ -309,14 +309,14 @@ static	int		pt1_thread(void *data)
 			if(data_pos >= DMA_RING_MAX){
 				data_pos = 0;
 				ring_pos += 1 ;
-				// DMAãƒªãƒ³ã‚°ãŒå¤‰ã‚ã£ãŸå ´åˆã¯ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
+				// DMA¥ê¥ó¥°¤¬ÊÑ¤ï¤Ã¤¿¾ì¹ç¤Ï¥¤¥ó¥¯¥ê¥á¥ó¥È
 				writel(0x00000020, dev_conf->regs);
 				if(ring_pos >= DMA_RING_SIZE){
 					ring_pos = 0 ;
 				}
 			}
 
-			// é »åº¦ã‚’è½ã™(wait until READ_SIZE)
+			// ÉÑÅÙ¤òÍî¤¹(wait until READ_SIZE)
 			for(lp = 0 ; lp < MAX_CHANNEL ; lp++){
 				channel = dev_conf->channel[real_channel[lp]] ;
 				if((channel->size >= READ_SIZE) && (channel->valid == TRUE)){
@@ -368,7 +368,7 @@ static int pt1_open(struct inode *inode, struct file *file)
 					channel->packet_size = 0 ;
 					file->private_data = channel;
 					mutex_lock(&channel->lock);
-					// ãƒ‡ãƒ¼ã‚¿åˆæœŸåŒ–
+					// ¥Ç¡¼¥¿½é´ü²½
 					channel->size = 0 ;
 					mutex_unlock(&channel->lock);
 					mutex_unlock(&device[lp]->lock);
@@ -393,7 +393,7 @@ static int pt1_release(struct inode *inode, struct file *file)
 	channel->counetererr = 0 ;
 	channel->transerr = 0 ;
 	channel->drop = 0 ;
-	// åœæ­¢ã—ã¦ã„ã‚‹å ´åˆã¯èµ·ã“ã™
+	// Ää»ß¤·¤Æ¤¤¤ë¾ì¹ç¤Ïµ¯¤³¤¹
 	if(channel->req_dma == TRUE){
 		channel->req_dma = FALSE ;
 		wake_up(&channel->ptr->dma_wait_q);
@@ -414,7 +414,7 @@ static ssize_t pt1_read(struct file *file, char __user *buf, size_t cnt, loff_t 
 	__u32	size ;
 	unsigned long dummy;
 
-	// READ_SIZEå˜ä½ã§èµ·ã“ã•ã‚Œã‚‹ã®ã‚’å¾…ã¤(CPUè² è·å¯¾ç­–)
+	// READ_SIZEÃ±°Ì¤Çµ¯¤³¤µ¤ì¤ë¤Î¤òÂÔ¤Ä(CPUÉé²ÙÂĞºö)
 	if(channel->size < READ_SIZE){
 		wait_event_timeout(channel->wait_q, (channel->size >= READ_SIZE),
 							msecs_to_jiffies(500));
@@ -425,28 +425,28 @@ static ssize_t pt1_read(struct file *file, char __user *buf, size_t cnt, loff_t 
 	}else{
 		__u32 tmp_size = 0;
 		if (cnt < channel->size) {
-			// ãƒãƒƒãƒ•ã‚¡ã«ã‚ã‚‹ãƒ‡ãƒ¼ã‚¿ã‚ˆã‚Šå°ã•ã„èª­ã¿è¾¼ã¿ã®å ´åˆ
+			// ¥Ğ¥Ã¥Õ¥¡¤Ë¤¢¤ë¥Ç¡¼¥¿¤è¤ê¾®¤µ¤¤ÆÉ¤ß¹ş¤ß¤Î¾ì¹ç
 			size = cnt;
 		} else {
-			// ãƒãƒƒãƒ•ã‚¡ã«ã‚ã‚‹ãƒ‡ãƒ¼ã‚¿ä»¥ä¸Šã®èª­ã¿è¾¼ã¿ã®å ´åˆ
+			// ¥Ğ¥Ã¥Õ¥¡¤Ë¤¢¤ë¥Ç¡¼¥¿°Ê¾å¤ÎÆÉ¤ß¹ş¤ß¤Î¾ì¹ç
 			size = channel->size;
 		}
 		if (channel->maxsize <= size + channel->pointer) {
-			// ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®å¢ƒç•Œã‚’è¶Šãˆã‚‹å ´åˆ
+			// ¥ê¥ó¥°¥Ğ¥Ã¥Õ¥¡¤Î¶­³¦¤ò±Û¤¨¤ë¾ì¹ç
 			tmp_size = channel->maxsize - channel->pointer;
-			// å¢ƒç•Œã¾ã§ã‚³ãƒ”ãƒ¼
+			// ¶­³¦¤Ş¤Ç¥³¥Ô¡¼
 			dummy = copy_to_user(buf, &channel->buf[channel->pointer], tmp_size);
-			// æ®‹ã‚Šã‚’ã‚³ãƒ”ãƒ¼
+			// »Ä¤ê¤ò¥³¥Ô¡¼
 			dummy = copy_to_user(&buf[tmp_size], channel->buf, size - tmp_size);
 			channel->pointer = size - tmp_size;
 		} else {
-			// æ™®é€šã«ã‚³ãƒ”ãƒ¼
+			// ÉáÄÌ¤Ë¥³¥Ô¡¼
 			dummy = copy_to_user(buf, &channel->buf[channel->pointer], size);
 			channel->pointer += size;
 		}
 		channel->size -= size;
 	}
-	// èª­ã¿çµ‚ã‚ã£ãŸã‹ã¤ä½¿ç”¨ã—ã¦ã„ã‚‹ã®ãŒãŒ4Kä»¥ä¸‹
+	// ÆÉ¤ß½ª¤ï¤Ã¤¿¤«¤Ä»ÈÍÑ¤·¤Æ¤¤¤ë¤Î¤¬¤¬4K°Ê²¼
 	if(channel->req_dma == TRUE){
 		channel->req_dma = FALSE ;
 		wake_up(&channel->ptr->dma_wait_q);
@@ -635,7 +635,7 @@ int		pt1_makering(struct pci_dev *pdev, PT1_DEVICE *dev_conf)
 	__u32	addr  ;
 	__u32	*ptr ;
 
-	//DMAãƒªãƒ³ã‚°ä½œæˆ
+	//DMA¥ê¥ó¥°ºîÀ®
 	for(lp = 0 ; lp < DMA_RING_SIZE ; lp++){
 		ptr = dev_conf->dmaptr[lp];
 		if(lp ==  (DMA_RING_SIZE - 1)){
@@ -655,7 +655,7 @@ int		pt1_makering(struct pci_dev *pdev, PT1_DEVICE *dev_conf)
 				return -1 ;
 			}
 			dmactl->data[lp2] = dmaptr ;
-			// DMAãƒ‡ãƒ¼ã‚¿ã‚¨ãƒªã‚¢åˆæœŸåŒ–
+			// DMA¥Ç¡¼¥¿¥¨¥ê¥¢½é´ü²½
 			dmaptr[(DMA_SIZE / sizeof(__u32)) - 2] = 0 ;
 			addr = (__u32)dmactl->ring_dma[lp2];
 			addr >>= 12 ;
@@ -702,11 +702,7 @@ int		pt1_dma_free(struct pci_dev *pdev, PT1_DEVICE *dev_conf)
 	}
 	return 0 ;
 }
-#if LINUX_VERSION_CODE < KERNEL_VERSION(3,8,0)
 static int __devinit pt1_pci_init_one (struct pci_dev *pdev,
-#else
-static int pt1_pci_init_one (struct pci_dev *pdev,
-#endif
 				     const struct pci_device_id *ent)
 {
 	int			rc ;
@@ -768,7 +764,7 @@ static int pt1_pci_init_one (struct pci_dev *pdev,
 		break;
 	}
 
-	// PCIã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’ãƒãƒƒãƒ—ã™ã‚‹
+	// PCI¥¢¥É¥ì¥¹¤ò¥Ş¥Ã¥×¤¹¤ë
 	dev_conf->mmio_start = pci_resource_start(pdev, 0);
 	dev_conf->mmio_len = pci_resource_len(pdev, 0);
 	dummy = request_mem_region(dev_conf->mmio_start, dev_conf->mmio_len, DEV_NAME);
@@ -782,12 +778,12 @@ static int pt1_pci_init_one (struct pci_dev *pdev,
 		PT1_PRINTK(0, KERN_ERR, "Can't remap register area.\n");
 		goto out_err_regbase;
 	}
-	// åˆæœŸåŒ–å‡¦ç†
+	// ½é´ü²½½èÍı
 	if(xc3s_init(dev_conf->regs, dev_conf->cardtype)){
 		PT1_PRINTK(0, KERN_ERR, "Error xc3s_init\n");
 		goto out_err_fpga;
 	}
-	// ãƒãƒ¥ãƒ¼ãƒŠãƒªã‚»ãƒƒãƒˆ
+	// ¥Á¥å¡¼¥Ê¥ê¥»¥Ã¥È
 	settuner_reset(dev_conf->regs, dev_conf->cardtype, LNB_OFF, TUNER_POWER_ON_RESET_ENABLE);
 	schedule_timeout_interruptible(msecs_to_jiffies(100));
 
@@ -795,7 +791,7 @@ static int pt1_pci_init_one (struct pci_dev *pdev,
 	schedule_timeout_interruptible(msecs_to_jiffies(100));
 	mutex_init(&dev_conf->lock);
 
-	// Tuner åˆæœŸåŒ–å‡¦ç†
+	// Tuner ½é´ü²½½èÍı
 	for(lp = 0 ; lp < MAX_TUNER ; lp++){
 		rc = tuner_init(dev_conf->regs, dev_conf->cardtype, &dev_conf->lock, lp);
 		if(rc < 0){
@@ -803,7 +799,7 @@ static int pt1_pci_init_one (struct pci_dev *pdev,
 			goto out_err_fpga;
 		}
 	}
-	// åˆæœŸåŒ–å®Œäº†
+	// ½é´ü²½´°Î»
 	for(lp = 0 ; lp < MAX_CHANNEL ; lp++){
 		set_sleepmode(dev_conf->regs, &dev_conf->lock,
 						i2c_address[lp], channeltype[lp], TYPE_SLEEP);
@@ -815,7 +811,7 @@ static int pt1_pci_init_one (struct pci_dev *pdev,
 		goto out_err_fpga;
 	}
 
-	// åˆæœŸåŒ–
+	// ½é´ü²½
 	init_waitqueue_head(&dev_conf->dma_wait_q);
 
 	minor = MINOR(dev_conf->dev) ;
@@ -839,16 +835,16 @@ static int pt1_pci_init_one (struct pci_dev *pdev,
 			return -ENOMEM ;
 		}
 
-		// å…±é€šæƒ…å ±
+		// ¶¦ÄÌ¾ğÊó
 		mutex_init(&channel->lock);
-		// å¾…ã¡çŠ¶æ…‹ã‚’è§£é™¤
+		// ÂÔ¤Á¾õÂÖ¤ò²ò½ü
 		channel->req_dma = FALSE ;
-		// ãƒã‚¤ãƒŠãƒ¼ç•ªå·è¨­å®š
+		// ¥Ş¥¤¥Ê¡¼ÈÖ¹æÀßÄê
 		channel->minor = MINOR(dev_conf->dev) + lp ;
-		// å¯¾è±¡ã®I2Cãƒ‡ãƒã‚¤ã‚¹
+		// ÂĞ¾İ¤ÎI2C¥Ç¥Ğ¥¤¥¹
 		channel->address = i2c_address[lp] ;
 		channel->type = channeltype[lp] ;
-		// å®Ÿéš›ã®ãƒãƒ¥ãƒ¼ãƒŠç•ªå·
+		// ¼Âºİ¤Î¥Á¥å¡¼¥ÊÈÖ¹æ
 		channel->channel = real_channel[lp] ;
 		channel->ptr = dev_conf ;
 		channel->size = 0 ;
@@ -871,9 +867,9 @@ static int pt1_pci_init_one (struct pci_dev *pdev,
 		if(channel->buf == NULL){
 			goto out_err_v4l;
 		}
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,27)
 		PT1_PRINTK(1, KERN_INFO, "card_number = %d\n",
 		       dev_conf->card_number);
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,27)
 		device_create(pt1video_class,
 			      NULL,
 			      MKDEV(MAJOR(dev_conf->dev),
@@ -932,11 +928,7 @@ out_err_regbase:
 
 }
 
-#if LINUX_VERSION_CODE < KERNEL_VERSION(3,8,0)
 static void __devexit pt1_pci_remove_one(struct pci_dev *pdev)
-#else
-static void pt1_pci_remove_one(struct pci_dev *pdev)
-#endif
 {
 
 	int		lp ;
@@ -950,7 +942,7 @@ static void pt1_pci_remove_one(struct pci_dev *pdev)
 			dev_conf->kthread = NULL;
 		}
 
-		// DMAçµ‚äº†
+		// DMA½ªÎ»
 		writel(0x08080000, dev_conf->regs);
 		for(lp = 0 ; lp < 10 ; lp++){
 			val = readl(dev_conf->regs);
@@ -1003,11 +995,7 @@ static int pt1_pci_resume (struct pci_dev *pdev)
 static struct pci_driver pt1_driver = {
 	.name		= DRV_NAME,
 	.probe		= pt1_pci_init_one,
-#if LINUX_VERSION_CODE < KERNEL_VERSION(3,8,0)
 	.remove		= __devexit_p(pt1_pci_remove_one),
-#else
-	.remove		= pt1_pci_remove_one,
-#endif
 	.id_table	= pt1_pci_tbl,
 #ifdef CONFIG_PM
 	.suspend	= pt1_pci_suspend,

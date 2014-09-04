@@ -33,21 +33,21 @@ TUNER_INFO	tuner_info[2] = {
 };
 
 typedef	struct	_isdb_t_freq_add_table{
-	__u16		pos ;		// è¿½åŠ ã™ã‚‹ãƒãƒ£ãƒ³ãƒãƒ«ãƒã‚¸ã‚·ãƒ§ãƒ³
-	__u16		add_freq ;	// è¿½åŠ ã™ã‚‹å€¤
+	__u16		pos ;		// ÄÉ²Ã¤¹¤ë¥Á¥ã¥ó¥Í¥ë¥İ¥¸¥·¥ç¥ó
+	__u16		add_freq ;	// ÄÉ²Ã¤¹¤ëÃÍ
 }isdb_t_freq_add_table;
 
 isdb_t_freq_add_table	isdb_t_freq_add[10] = {
-	{  7, 0x8081},				// 0ï½7è¿„
-	{ 12, 0x80A1},				// 8ï½12è¿„
-	{ 21, 0x8062},				// 13ï½21è¿„
-	{ 39, 0x80A2},				// 22ï½39è¿„
-	{ 51, 0x80E2},				// 40ï½51è¿„
-	{ 59, 0x8064},				// 52ï½59è¿„
-	{ 75, 0x8084},				// 60ï½75è¿„
-	{ 84, 0x80a4},				// 76ï½84è¿„
-	{100, 0x80C4},				// 85ï½100è¿„
-	{112, 0x80E4}				// 101ï½112è¿„
+	{  7, 0x8081},				// 0¡Á7Ëø
+	{ 12, 0x80A1},				// 8¡Á12Ëø
+	{ 21, 0x8062},				// 13¡Á21Ëø
+	{ 39, 0x80A2},				// 22¡Á39Ëø
+	{ 51, 0x80E2},				// 40¡Á51Ëø
+	{ 59, 0x8064},				// 52¡Á59Ëø
+	{ 75, 0x8084},				// 60¡Á75Ëø
+	{ 84, 0x80a4},				// 76¡Á84Ëø
+	{100, 0x80C4},				// 85¡Á100Ëø
+	{112, 0x80E4}				// 101¡Á112Ëø
 };
 
 void	settuner_reset(void __iomem *regs, int cardtype, __u32 lnb, __u32 tuner)
@@ -102,10 +102,10 @@ static	int		init_isdb_s(void __iomem *regs, int cardtype, struct mutex *lock, __
 	int		lp ;
 	__u32	val ;
 
-	// ISDB-S/TåˆæœŸåŒ–
+	// ISDB-S/T½é´ü²½
 	memcpy(&wk, &com_initdata, sizeof(WBLOCK));
 
-	// åˆæœŸåŒ–ï¼‘(ãªãœã‹READãªã®ã§)
+	// ½é´ü²½£±(¤Ê¤¼¤«READ¤Ê¤Î¤Ç)
 	memcpy(&wk, &isdb_s_init1, sizeof(WBLOCK));
 	wk.addr = addr;
 	val = i2c_read(regs, lock, &wk, 1);
@@ -140,7 +140,7 @@ static	void	init_isdb_t(void __iomem *regs, int cardtype, struct mutex *lock, __
 	int		lp ;
 	WBLOCK	wk;
 
-	// ISDB-S/TåˆæœŸåŒ–
+	// ISDB-S/T½é´ü²½
 	if(cardtype == PT1) {
 		for(lp = 0 ; lp < PT1_MAX_ISDB_T_INIT ; lp++){
 			memcpy(&wk, isdb_t_initial_pt1[lp], sizeof(WBLOCK));
@@ -163,10 +163,10 @@ int		tuner_init(void __iomem *regs, int cardtype, struct mutex *lock, int tuner_
 	int		rc ;
 	WBLOCK	wk;
 
-	// ISDB-S/TåˆæœŸåŒ–
+	// ISDB-S/T½é´ü²½
 	memcpy(&wk, &com_initdata, sizeof(WBLOCK));
 
-	// åˆæœŸåŒ–(å…±é€š)
+	// ½é´ü²½(¶¦ÄÌ)
 	wk.addr = tuner_info[tuner_no].isdb_t ;
 	i2c_write(regs, lock, &wk);
 	wk.addr = tuner_info[tuner_no].isdb_s ;
@@ -244,15 +244,15 @@ int		bs_frequency(void __iomem *regs, struct mutex *lock, int addr, int channel)
 	if(channel >= MAX_BS_CHANNEL){
 		return -EIO ;
 	}
-	// ISDB-S PLLãƒ­ãƒƒã‚¯
+	// ISDB-S PLL¥í¥Ã¥¯
 	for(lp = 0 ; lp < MAX_BS_CHANNEL_PLL_COMMAND ; lp++){
 		memcpy(&wk, bs_pll[channel].wblock[lp], sizeof(WBLOCK));
 		wk.addr = addr ;
 		i2c_write(regs, lock, &wk);
 	}
 
-	// PLLãƒ­ãƒƒã‚¯ç¢ºèª
-	// ãƒã‚§ãƒƒã‚¯ç”¨
+	// PLL¥í¥Ã¥¯³ÎÇ§
+	// ¥Á¥§¥Ã¥¯ÍÑ
 	for(lp = 0 ; lp < 200 ; lp++){
 		memcpy(&wk, &bs_pll_lock, sizeof(WBLOCK));
 		wk.addr = addr;
@@ -306,7 +306,7 @@ int		ts_lock(void __iomem *regs, struct mutex *lock, int addr, __u16 ts_id)
 	uts_id.tsid = ts_id ;
 	memcpy(&wk, &bs_set_ts_lock, sizeof(WBLOCK));
 	wk.addr = addr;
-	// TS-IDè¨­å®š
+	// TS-IDÀßÄê
 	wk.value[1]  = uts_id.ts[1];
 	wk.value[2]  = uts_id.ts[0];
 	i2c_write(regs, lock, &wk);
@@ -349,13 +349,13 @@ int		bs_tune(void __iomem *regs, struct mutex *lock, int addr, int channel, ISDB
 	}
 
 	tsid = &tmcc->ts_id[0] ;
-	// è©²å½“å‘¨æ³¢æ•°ã®TS-IDã‚’å–å¾—
+	// ³ºÅö¼şÇÈ¿ô¤ÎTS-ID¤ò¼èÆÀ
 	for(lp = 0 ; lp < (MAX_BS_TS_ID / 2) ; lp++){
 		for(lp2 = 0 ; lp2 < 100 ; lp2++){
 			memcpy(&wk, bs_get_ts_id[lp], sizeof(WBLOCK));
 			wk.addr = addr;
 			ts_id.tsid = i2c_read(regs, lock, &wk, 4);
-			// TS-IDãŒ0ã®å ´åˆã¯å†å–å¾—ã™ã‚‹
+			// TS-ID¤¬0¤Î¾ì¹ç¤ÏºÆ¼èÆÀ¤¹¤ë
 			if((ts_id.ts[0] != 0) && (ts_id.ts[1] != 0)){
 				break ;
 			}
@@ -370,16 +370,16 @@ int		bs_tune(void __iomem *regs, struct mutex *lock, int addr, int channel, ISDB
 	wk.addr = addr;
 	tmcc->agc = i2c_read(regs, lock, &wk, 1);
 
-	// TS-IDåˆ¥ã®æƒ…å ±ã‚’å–å¾—
+	// TS-IDÊÌ¤Î¾ğÊó¤ò¼èÆÀ
 	tsid = &tmcc->ts_id[0] ;
 	for(lp = 0 ; lp < MAX_BS_TS_ID ; lp++, tsid += 1){
-		// TS-IDãªã—=0XFFFF
+		// TS-ID¤Ê¤·=0XFFFF
 		if(tsid->ts_id == 0xFFFF){
 			continue ;
 		}
 		ts_lock(regs, lock, addr, tsid->ts_id);
 
-		//ã‚¹ãƒ­ãƒƒãƒˆå–å¾—
+		//¥¹¥í¥Ã¥È¼èÆÀ
 		memcpy(&wk, &bs_get_slot, sizeof(WBLOCK));
 		wk.addr = addr;
 		ts_slot.u32slot = i2c_read(regs, lock, &wk, 3);
@@ -461,22 +461,21 @@ int		isdb_t_frequency(void __iomem *regs, struct mutex *lock, int addr, int chan
 	}freq[2] ;
 
 	if(channel >= MAX_ISDB_T_CHANNEL){
-		printk(KERN_INFO "PT1:ISDB-T CHANNEL OVER(%i:113)\n", channel);
 		return -EIO ;
 	}
 
 	freq[0].freq = getfrequency(channel, addfreq);
 	freq[1].freq = getfrequency_add(channel);
-	//æŒ‡å®šå‘¨æ³¢æ•°
+	//»ØÄê¼şÇÈ¿ô
 	memcpy(&wk, &isdb_t_pll_base, sizeof(WBLOCK));
 	wk.addr = addr ;
-	// è¨ˆç®—ã—ãŸå‘¨æ³¢æ•°ã‚’è¨­å®š
+	// ·×»»¤·¤¿¼şÇÈ¿ô¤òÀßÄê
 	wk.value[wk.count] = freq[0].charfreq[1];
 	wk.count += 1 ;
 	wk.value[wk.count] = freq[0].charfreq[0];
 	wk.count += 1 ;
 
-	// è¨ˆç®—ã—ãŸå‘¨æ³¢æ•°ä»˜åŠ æƒ…å ±ã‚’è¨­å®š
+	// ·×»»¤·¤¿¼şÇÈ¿ôÉÕ²Ã¾ğÊó¤òÀßÄê
 	wk.value[wk.count] = freq[1].charfreq[1];
 	wk.count += 1 ;
 	wk.value[wk.count] = freq[1].charfreq[0];
@@ -513,7 +512,6 @@ int		isdb_t_frequency(void __iomem *regs, struct mutex *lock, int addr, int chan
 		}
 	}
 	if(tmcclock != TRUE){
-		printk(KERN_INFO "PT1:ISDB-T TUNE READ NG(%08x)\n", val);
 		return -EIO ;
 	}
 	return 0 ;
