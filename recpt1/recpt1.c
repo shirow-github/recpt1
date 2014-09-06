@@ -707,7 +707,7 @@ main(int argc, char **argv)
             break;
         case 'v':
             fprintf(stderr, "%s %s\n", argv[0], version);
-            fprintf(stderr, "recorder command for PT1/2 digital tuner.\n");
+            fprintf(stderr, "recorder command for PT1/2/3 digital tuner.\n");
             exit(0);
             break;
         case 'l':
