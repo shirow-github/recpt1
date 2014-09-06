@@ -755,7 +755,6 @@ main(int argc, char **argv)
     }
 
 if(use_http){	// http-server add-
-	BUFSZ *qbuf;
 	fprintf(stderr, "run as a daemon..\n");
 	if(daemon(1,1)){
 		perror("failed to start");
@@ -1057,6 +1056,7 @@ while(1){	// http-server add-
     destroy_queue(p_queue);
 	if(use_http){	// http-server add-
 		//reset queue
+		BUFSZ *qbuf;
 		while(p_queue->num_used) {
 		     qbuf = dequeue(p_queue);
 		     free(qbuf);
