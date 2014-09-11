@@ -1,0 +1,5 @@
+. driver/dkms.conf
+
+su -c "
+dkms remove -m $PACKAGE_NAME -v $PACKAGE_VERSION --all;
+rm -vrf /usr/src/$PACKAGE_NAME-$PACKAGE_VERSION"
