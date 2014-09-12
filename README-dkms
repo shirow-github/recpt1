@@ -1,0 +1,19 @@
+【dkmsでのインストール方法】
+
+$ sudo ${SHELL} ./dkms.install
+$ sudo reboot
+
+
+【dkmsでのアンインストール方法】
+
+$ sudo ${SHELL} ./dkms.uninstall
+$ dkms reboot
+
+
+【注意事項】
+システムの自動更新等でKernelのバージョンが変わった場合、
+そのままだとpt1/2ドライバを再度インストールする必要が生じます。
+この手順を自動化する仕組みに「DKMS」があります。
+この「DKMS」を簡単に利用できるように「dkms.install」ファイルも同梱しています。
+DKMSを無効化したい場合は「dkms.uninstall」ファイルも同梱しています。
+なお「dkms.install」、または「dkms.uninstall」実行後は、使用するシステムを必ず再起動して下さい。
