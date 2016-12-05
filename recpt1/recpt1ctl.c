@@ -24,7 +24,7 @@ show_options(void)
     fprintf(stderr, "Options:\n");
     fprintf(stderr, "--pid:               Process id of recpt1 to control\n");
     fprintf(stderr, "--channel:           Tune to specified channel\n");
-	fprintf(stderr, "--sid SID1,SID2,...: Specify SID number in CSV format (101,102,...)\n");
+    fprintf(stderr, "--sid SID1,SID2,...: Specify SID number in CSV format (101,102,...)\n");
     fprintf(stderr, "--extend:            Extend recording time\n");
     fprintf(stderr, "--time:              Set total recording time\n");
     fprintf(stderr, "--help:              Show this help\n");
@@ -42,14 +42,14 @@ main(int argc, char **argv)
     char *channel = NULL;
     message_buf sbuf;
     size_t buf_length;
-	char *sid_list = NULL;
+    char *sid_list = NULL;
 
     int result;
     int option_index;
     struct option long_options[] = {
         { "pid",       1, NULL, 'p'},
         { "channel",   1, NULL, 'c'},
-		{ "sid",	   1, NULL, 'i'},
+	{ "sid",       1, NULL, 'i'},
         { "extend",    1, NULL, 'e'},
         { "time",      1, NULL, 't'},
         { "help",      0, NULL, 'h'},
@@ -97,10 +97,10 @@ main(int argc, char **argv)
             parse_time(optarg, &recsec);
             fprintf(stderr, "Total recording time = %d sec\n", recsec);
             break;
-		case 'i':
-			sid_list = optarg;
+	case 'i':
+	    sid_list = optarg;
             fprintf(stderr, "Service ID = %s\n", sid_list);
-			break;
+	    break;
         }
     }
 
