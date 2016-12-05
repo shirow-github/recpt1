@@ -407,7 +407,7 @@ tune(char *channel, thread_data *tdata, char *device)
         }
 
         /* power on LNB */
-        f(tdata->table->type == CHTYPE_SATELLITE) {
+        if(tdata->table->type == CHTYPE_SATELLITE) {
             if(ioctl(tdata->tfd, LNB_ENABLE, tdata->lnb) < 0) {
                 fprintf(stderr, "Power on LNB failed: %s\n", device);
             }
