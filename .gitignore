@@ -1,7 +1,7 @@
 *.o
-*.ko
 *~
 .*.cmd
+/driver/pt1_drv.ko
 /driver/.tmp_versions/
 /driver/.tmp_versions/*
 /driver/Module.symvers
