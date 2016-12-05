@@ -4,6 +4,8 @@
 #include "version.h"
 #include "pt1_dev.h"
 
+#include "asicen_dtv.h"
+
 #define ISDB_T_NODE_LIMIT 24        // 32:ARIB limit 24:program maximum
 #define ISDB_T_SLOT_LIMIT 8
 
@@ -405,7 +407,7 @@ tune(char *channel, thread_data *tdata, char *device)
         }
 
         /* power on LNB */
-        if(tdata->table->type == CHTYPE_SATELLITE) {
+        f(tdata->table->type == CHTYPE_SATELLITE) {
             if(ioctl(tdata->tfd, LNB_ENABLE, tdata->lnb) < 0) {
                 fprintf(stderr, "Power on LNB failed: %s\n", device);
             }
@@ -510,6 +512,11 @@ tune(char *channel, thread_data *tdata, char *device)
     int lp;
     FREQUENCY freq;
 
+	unsigned char EncAPKey[16];
+	unsigned char EncPCKey[16]={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,16};	// Just use a dummy key to test
+	unsigned char EncAPKey1[16]={0x8b, 0x59, 0x82, 0xe7, 0x98, 0xdc, 0x40, 0xef, 0x8e, 0x43, 0x21, 0x6f, 0xeb, 0x92, 0x80, 0x8c};	// use PLEX key1[0]
+	unsigned char EncAPKey2[16]={0xf0, 0xf1, 0x33, 0x84, 0xa1, 0x1d, 0x46, 0x25, 0x95, 0x1a, 0xce, 0x09, 0xdd, 0x86, 0x78, 0xa4};	// use PLEX key2[0]
+
     /* get channel */
     tdata->table = searchrecoff(channel);
     if(tdata->table == NULL) {
@@ -528,6 +535,14 @@ tune(char *channel, thread_data *tdata, char *device)
             fprintf(stderr, "Cannot open tuner device: %s\n", device);
             return 1;
         }
+
+#ifdef ASV5220_USE_APKEY1
+		memcpy(EncAPKey,EncAPKey1,16);
+		DTV_SetEncrypKey(EncAPKey,16,EncPCKey,16,tdata->tfd);
+#else
+		memcpy(EncAPKey,EncAPKey2,16);
+		DTV_SetEncrypKey(EncAPKey,16,EncPCKey,16,tdata->tfd);
+#endif
 
         /* power on LNB */
         if(tdata->table->type == CHTYPE_SATELLITE) {
@@ -557,6 +572,15 @@ tune(char *channel, thread_data *tdata, char *device)
         for(lp = 0; lp < num_devs; lp++) {
             tdata->tfd = open(tuner[lp], O_RDONLY);
             if(tdata->tfd >= 0) {
+
+#ifdef ASV5220_USE_APKEY1
+				memcpy(EncAPKey,EncAPKey1,16);
+				DTV_SetEncrypKey(EncAPKey,16,EncPCKey,16,tdata->tfd);
+#else
+				memcpy(EncAPKey,EncAPKey2,16);
+				DTV_SetEncrypKey(EncAPKey,16,EncPCKey,16,tdata->tfd);
+#endif
+
                 /* power on LNB */
                 if(tdata->table->type == CHTYPE_SATELLITE) {
                     if(ioctl(tdata->tfd, LNB_ENABLE, tdata->lnb) < 0) {
