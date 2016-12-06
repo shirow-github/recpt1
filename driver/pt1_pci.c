@@ -51,6 +51,10 @@ typedef struct pm_message {
 #define __devexit_p
 #endif
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,2,0)
+#include <linux/vmalloc.h>
+#endif
+
 /* These identify the driver base version and may not be removed. */
 static char version[] __devinitdata =
 DRV_NAME ".c: " DRV_VERSION " " DRV_RELDATE " \n";
