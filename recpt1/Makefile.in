@@ -8,9 +8,9 @@ TARGET = recpt1
 TARGET2 = recpt1ctl
 TARGET3 = checksignal
 TARGETS = $(TARGET) $(TARGET2) $(TARGET3)
-RELEASE_VERSION = "1.2.0"
+RELEASE_VERSION = "1.2.1"
 
-CPPFLAGS = -I../driver -Wall -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
+CPPFLAGS = -I../driver-pt1 -Wall -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 CFLAGS   = -O2 -g -pthread
 
 LIBS     = @LIBS@
@@ -50,9 +50,9 @@ $(DEPEND): version.h
 version.h:
 	revh="`git rev-list HEAD | wc -l 2> /dev/null`"; \
 	if [ -n "$$revh" ] && [ "$$revh" != "0" ] ; then \
-		echo "const char *version = \"rev.$$revh by shirow-github\";" > $@; \
+		echo "const char *version = \"ver.$(RELEASE_VERSION) rev.$$revh by shirow-github\";" > $@; \
 	else \
-		echo "const char *version = \"$(RELEASE_VERSION)\";" > $@; \
+		echo "const char *version = \"ver.$(RELEASE_VERSION)\";" > $@; \
 	fi
 
 install: $(TARGET)
