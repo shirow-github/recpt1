@@ -666,7 +666,8 @@ main(int argc, char **argv)
     int val;
     char *voltage[] = {"0V", "11V", "15V"};
     char *sid_list = NULL;
-	int connected_socket, listening_socket;
+	//int connected_socket, listening_socket;
+	int connected_socket, listening_socket = 0;
 	unsigned int len;
 	char *channel;
 

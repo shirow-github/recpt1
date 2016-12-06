@@ -178,8 +178,8 @@ void Gen_Identify_Key(unsigned char* OutputKey, unsigned char* InputKey, unsigne
 int DTV_Get_Device_Support(unsigned char* pFeature,int InputSz,HANDLE hDeviceHandle)
 {
 	int   success;
-	unsigned char u8Data=0;
-	unsigned long ReturnVariable=0;
+	//unsigned char u8Data=0;
+	//unsigned long ReturnVariable=0;
 	
 	success = ioctl(hDeviceHandle, GET_DRV_SUPPORT,pFeature);
  	return success;
@@ -188,8 +188,8 @@ int DTV_Get_Device_Support(unsigned char* pFeature,int InputSz,HANDLE hDeviceHan
 int DTV_Get_RandomKey(unsigned char* pRandomKey,int InputSz,HANDLE hDeviceHandle)
 {
 	int   success;
-	unsigned char u8Data=0;
-	unsigned long ReturnVariable=0;
+	//unsigned char u8Data=0;
+	//unsigned long ReturnVariable=0;
 	
 	success = ioctl(hDeviceHandle, GET_RANDOM_KEY,pRandomKey);
  	return success;
@@ -199,8 +199,8 @@ int DTV_SetEncrypKey(unsigned char* APEncSeed, unsigned char APEncSeedLen,	unsig
 {
 	int   success;
 	AUSBDTV_GEN_ENCSEED_STRUCTURE DTV_GEN_ENCSEED_Data;
-	unsigned long ReturnVariable=0;
-	unsigned char u8CmdRtData[64];
+	//unsigned long ReturnVariable=0;
+	//unsigned char u8CmdRtData[64];
 	unsigned char bAPKeyIdenfy[4];
 	unsigned char pRandomKey[16];
 	unsigned char OutputKey[16];
@@ -238,7 +238,7 @@ int DTV_GetDecryptData(unsigned char* TSData_In, int FrameNum,unsigned char* TSD
 {
 	int   success;
 	AUSBDTV_DECRYP_MULTI_TS_STRUCTURE DTV_DECRYP_MULTI_Data;
-	unsigned long ReturnVariable=0;
+	//unsigned long ReturnVariable=0;
 	
 	
 	DTV_DECRYP_MULTI_Data.TSData_In=TSData_In;
