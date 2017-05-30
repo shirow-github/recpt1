@@ -899,7 +899,7 @@ while(1){	// http-server add-
 			sid_list = sidflg;
 		fprintf(stderr,"channel is %s\n",channel);
 
-		if(!strcmp(sid_list,"all")){
+		if(sid_list == NULL || !strcmp(sid_list,"all")){
 			use_splitter = FALSE;
 			splitter = NULL;
 		}else{
