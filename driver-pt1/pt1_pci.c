@@ -11,13 +11,17 @@
 #include <linux/interrupt.h>
 #include <linux/version.h>
 #include <linux/mutex.h>
+#include <linux/uaccess.h>
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(3,4,0)
 #include <asm/system.h>
 #endif
 #include <asm/io.h>
 #include <asm/irq.h>
+
+#if LINUX_VERSION_CODE < KERNEL_VERSION(4,12,0)
 #include <asm/uaccess.h>
+#endif
 
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,23)
 #include <linux/freezer.h>
