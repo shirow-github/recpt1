@@ -90,6 +90,7 @@ ISDB_T_FREQ_CONV_TABLE    isdb_t_conv_table[] = {
     {   0, CHTYPE_SATELLITE, 1, "161"},  /* 161ch：BS-TBS */
     {   0, CHTYPE_SATELLITE, 2, "171"},  /* 171ch：BSジャパン */
     {   1, CHTYPE_SATELLITE, 0, "191"},  /* 191ch：WOWOW prime */
+    {   1, CHTYPE_SATELLITE, 1, "103"},  /* 103ch：NHK-BSプレミアム*/
     {   2, CHTYPE_SATELLITE, 0, "192"},  /* 192ch：WOWOWライブ */
     {   2, CHTYPE_SATELLITE, 1, "193"},  /* 193ch：WOWOWシネマ */
     {   3, CHTYPE_SATELLITE, 0, "201"},  /* 201ch：スター・チャンネル2 */
@@ -109,7 +110,6 @@ ISDB_T_FREQ_CONV_TABLE    isdb_t_conv_table[] = {
     {   6, CHTYPE_SATELLITE, 1, "181"},  /* 181ch：BSフジ */
     {   7, CHTYPE_SATELLITE, 0, "101"},  /* 101ch：NHK-BS1 */
     {   7, CHTYPE_SATELLITE, 0, "102"},  /* 102ch：NHK-BS1臨時 */
-    {   7, CHTYPE_SATELLITE, 1, "103"},  /* 103ch：NHK-BSプレミアム*/
     {   7, CHTYPE_SATELLITE, 1, "910"},  /* 910ch：ウェザーニュース(WNI)*/
     {   8, CHTYPE_SATELLITE, 2, "291"},  /* 291ch：NHK総合テレビジョン（東京）*/
     {   8, CHTYPE_SATELLITE, 2, "292"},  /* 292ch：NHK教育テレビジョン（東京）*/
