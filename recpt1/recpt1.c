@@ -667,9 +667,9 @@ main(int argc, char **argv)
     char *voltage[] = {"0V", "11V", "15V"};
     char *sid_list = NULL;
 	//int connected_socket, listening_socket;
-	int connected_socket, listening_socket = 0;
+	int connected_socket = 0, listening_socket = 0;
 	unsigned int len;
-	char *channel;
+	char *channel = NULL;
 
     while((result = getopt_long(argc, argv, "br:smn:ua:H:p:d:hvli:",
                                 long_options, &option_index)) != -1) {
