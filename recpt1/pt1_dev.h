@@ -94,8 +94,6 @@ ISDB_T_FREQ_CONV_TABLE    isdb_t_conv_table[] = {
     {   1, CHTYPE_SATELLITE, 2, "256"},  /* 256ch：ディズニー・チャンネル */
     {   2, CHTYPE_SATELLITE, 0, "192"},  /* 192ch：WOWOWライブ */
     {   2, CHTYPE_SATELLITE, 1, "193"},  /* 193ch：WOWOWシネマ */
-    {   3, CHTYPE_SATELLITE, 0, "201"},  /* 201ch：スター・チャンネル2 */
-    {   3, CHTYPE_SATELLITE, 0, "202"},  /* 202ch：スター・チャンネル3 */
     {   4, CHTYPE_SATELLITE, 0, "211"},  /* 211ch：BS11デジタル */
     {   4, CHTYPE_SATELLITE, 1, "200"},  /* 200ch：スター・チャンネル1 */
     {   4, CHTYPE_SATELLITE, 2, "222"},  /* 222ch：TwellV */
@@ -110,6 +108,8 @@ ISDB_T_FREQ_CONV_TABLE    isdb_t_conv_table[] = {
     {   6, CHTYPE_SATELLITE, 2, "236"},  /* 236ch：BSアニマックス */
     {   7, CHTYPE_SATELLITE, 0, "101"},  /* 101ch：NHK-BS1 */
     {   7, CHTYPE_SATELLITE, 0, "102"},  /* 102ch：NHK-BS1臨時 */
+    {   7, CHTYPE_SATELLITE, 1, "201"},  /* 201ch：スター・チャンネル2 */
+    {   7, CHTYPE_SATELLITE, 1, "202"},  /* 202ch：スター・チャンネル3 */
     {   7, CHTYPE_SATELLITE, 1, "910"},  /* 910ch：ウェザーニュース(WNI)*/
     {   8, CHTYPE_SATELLITE, 2, "291"},  /* 291ch：NHK総合テレビジョン（東京）*/
     {   8, CHTYPE_SATELLITE, 2, "292"},  /* 292ch：NHK教育テレビジョン（東京）*/
