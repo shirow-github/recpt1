@@ -535,7 +535,7 @@ static int count_used_bs_tuners(PT1_DEVICE *device)
 static long pt1_do_ioctl(struct file  *file, unsigned int cmd, unsigned long arg0)
 {
 	PT1_CHANNEL	*channel = file->private_data;
-	int		signal;
+	int		signal = 0;
 	unsigned long	dummy;
 	void		*arg = (void *)arg0;
 	int		lnb_eff, lnb_usr;
