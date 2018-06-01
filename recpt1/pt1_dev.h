@@ -122,7 +122,7 @@ ISDB_T_FREQ_CONV_TABLE    isdb_t_conv_table[] = {
     {   7, CHTYPE_SATELLITE, 1, "201"},  /* 201ch：スターチャンネル2 */
     {   7, CHTYPE_SATELLITE, 1, "202"},  /* 202ch：スターチャンネル3 */
     /* ch.17 */
-    {   8, CHTYPE_SATELLITE, 0, "401"},  /* 401ch：NHK SHV 4K */
+    {   8, CHTYPE_SATELLITE, 0, "401"},  /* 401ch：NHK BS4K */
     {   8, CHTYPE_SATELLITE, 1, "461"},  /* 461ch：BS-TBS 4K */
     {   8, CHTYPE_SATELLITE, 2, "481"},  /* 481ch：BSフジ 4K */
     /* ch.19 */

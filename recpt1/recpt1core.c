@@ -220,7 +220,7 @@ show_channels(void)
 	fprintf(stderr, "BS13_2: BSアニマックス\n");
 	fprintf(stderr, "BS15_0: NHK BS1\n");
 	fprintf(stderr, "BS15_1: スターチャンネル2/3\n");
-	fprintf(stderr, "BS17_0: NHK SHV 4K\n");
+	fprintf(stderr, "BS17_0: NHK BS4K\n");
 	fprintf(stderr, "BS17_1: BS-TBS 4K\n");
 	fprintf(stderr, "BS17_2: BSフジ 4K\n");
 	fprintf(stderr, "BS19_0: グリーンチャンネル\n");
