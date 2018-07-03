@@ -18,27 +18,7 @@ char *bsdev[NUM_BSDEV] = {
     "/dev/pt3video9",
     "/dev/pt3video8",
     "/dev/pt3video13",
-    "/dev/pt3video12",
-    "/dev/asv52201",
-    "/dev/asv52200",
-    "/dev/asv52205",
-    "/dev/asv52204",
-    "/dev/asv52209",
-    "/dev/asv52208",
-    "/dev/asv522013",
-    "/dev/asv522012",
-    "/dev/pxq3pe0",
-    "/dev/pxq3pe1",
-    "/dev/pxq3pe4",
-    "/dev/pxq3pe5",
-    "/dev/pxq3pe8",
-    "/dev/pxq3pe9",
-    "/dev/pxq3pe12",
-    "/dev/pxq3pe13",
-    "/dev/pxw3u30",  
-    "/dev/pxw3u32",
-    "/dev/pxs3u20",  
-    "/dev/pxs3u0" 
+    "/dev/pt3video12"
 };
 char *isdb_t_dev[NUM_ISDB_T_DEV] = {
     "/dev/pt1video2",
@@ -56,27 +36,7 @@ char *isdb_t_dev[NUM_ISDB_T_DEV] = {
     "/dev/pt3video10",
     "/dev/pt3video11",
     "/dev/pt3video14",
-    "/dev/pt3video15",
-    "/dev/asv52202",
-    "/dev/asv52203",
-    "/dev/asv52206",
-    "/dev/asv52207",
-    "/dev/asv522010",
-    "/dev/asv522011",
-    "/dev/asv522014",
-    "/dev/asv522015",
-    "/dev/pxq3pe2",
-    "/dev/pxq3pe3",
-    "/dev/pxq3pe6",
-    "/dev/pxq3pe7",
-    "/dev/pxq3pe10",
-    "/dev/pxq3pe11",
-    "/dev/pxq3pe14",
-    "/dev/pxq3pe15",
-    "/dev/pxw3u31", 
-    "/dev/pxw3u33",
-    "/dev/pxs3u21",  
-    "/dev/pxs3u1" 
+    "/dev/pt3video15"
 };
 
 // 変換テーブル(ISDB-T用)

@@ -1015,13 +1015,6 @@ while(1){	// http-server add-
             }
         }
 
-#ifdef ASV5220_USE_APKEY1
-		if( (bufptr->size%188)==0 )
-		{
-			DTV_GetDecryptData(bufptr->buffer, bufptr->size/188 ,bufptr->buffer,tdata.tfd);
-		}
-#endif
-
         enqueue(p_queue, bufptr);
 
         /* stop recording */
