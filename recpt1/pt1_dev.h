@@ -65,7 +65,7 @@ ISDB_T_FREQ_CONV_TABLE    isdb_t_conv_table[] = {
     /* ch.1 */
     {   0, CHTYPE_SATELLITE, 0, "151"},  /* 151ch：BS朝日 */
     {   0, CHTYPE_SATELLITE, 1, "161"},  /* 161ch：BS-TBS */
-    {   0, CHTYPE_SATELLITE, 2, "171"},  /* 171ch：BSジャパン */
+    {   0, CHTYPE_SATELLITE, 2, "171"},  /* 171ch：BSテレ東 */
     /* ch.3 */
     {   1, CHTYPE_SATELLITE, 0, "191"},  /* 191ch：WOWOWプライム */
     {   1, CHTYPE_SATELLITE, 1, "103"},  /* 103ch：NHK BSプレミアム*/
@@ -75,7 +75,7 @@ ISDB_T_FREQ_CONV_TABLE    isdb_t_conv_table[] = {
     {   2, CHTYPE_SATELLITE, 1, "193"},  /* 193ch：WOWOWシネマ */
     /* ch.7 */
     {   3, CHTYPE_SATELLITE, 0, "451"},  /* 451ch：BS朝日 4K */
-    {   3, CHTYPE_SATELLITE, 1, "471"},  /* 471ch：BSジャパン 4K */
+    {   3, CHTYPE_SATELLITE, 1, "471"},  /* 471ch：BSテレ東 4K */
     {   3, CHTYPE_SATELLITE, 2, "441"},  /* 441ch：BS日テレ 4K */
     /* ch.9 */
     {   4, CHTYPE_SATELLITE, 0, "211"},  /* 211ch：BS11 */
