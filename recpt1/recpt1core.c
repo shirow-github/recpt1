@@ -193,7 +193,7 @@ show_channels(void)
             fprintf(stderr, "%s", buf);
         fclose(f);
     }
-    else
+    else {
         fprintf(stderr, "13-62: Terrestrial Channels\n");
 
 	fprintf(stderr, "BS01_0: BS朝日\n");
@@ -210,9 +210,8 @@ show_channels(void)
 	fprintf(stderr, "BS09_0: BS11\n");
 	fprintf(stderr, "BS09_1: スターチャンネル1\n");
 	fprintf(stderr, "BS09_2: TwellV\n");
-	fprintf(stderr, "BS11_0: FOXスポーツ＆エンターテイメント\n");
-	fprintf(stderr, "BS11_1: BSスカパー!\n");
-	fprintf(stderr, "BS11_2: 放送大学\n");
+	fprintf(stderr, "BS11_0: BSスカパー!\n");
+	fprintf(stderr, "BS11_1: 放送大学\n");
 	fprintf(stderr, "BS13_0: BS日テレ\n");
 	fprintf(stderr, "BS13_1: BSフジ\n");
 	fprintf(stderr, "BS13_2: BSアニマックス\n");
@@ -229,10 +228,10 @@ show_channels(void)
 	fprintf(stderr, "BS21_2: J SPORTS 4\n");
 	fprintf(stderr, "BS23_0: BS釣りビジョン\n");
 	fprintf(stderr, "BS23_1: 日本映画専門チャンネル\n");
-	fprintf(stderr, "BS23_2: Dlife\n");
 
 	fprintf(stderr, "C13-C63: CATV Channels\n");
 	fprintf(stderr, "CS2-CS24: CS Channels\n");
+	}
 }
 
 

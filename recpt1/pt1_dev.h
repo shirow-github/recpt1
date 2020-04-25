@@ -82,11 +82,9 @@ ISDB_T_FREQ_CONV_TABLE    isdb_t_conv_table[] = {
     {   4, CHTYPE_SATELLITE, 1, "200"},  /* 200ch：スターチャンネル1 */
     {   4, CHTYPE_SATELLITE, 2, "222"},  /* 222ch：TwellV */
     /* ch.11 */
-    {   5, CHTYPE_SATELLITE, 0, "238"},  /* 238ch：FOXスポーツ＆エンターテイメント */
-    {   5, CHTYPE_SATELLITE, 1, "241"},  /* 241ch：BSスカパー！ */
-    {   5, CHTYPE_SATELLITE, 2, "231"},  /* 231ch：放送大学テレビ1 */
-    {   5, CHTYPE_SATELLITE, 2, "232"},  /* 232ch：放送大学テレビ2 */
-    {   5, CHTYPE_SATELLITE, 2, "233"},  /* 233ch：放送大学テレビ3 */
+    {   5, CHTYPE_SATELLITE, 0, "241"},  /* 241ch：BSスカパー！ */
+    {   5, CHTYPE_SATELLITE, 1, "231"},  /* 231ch：放送大学キャンパスex */
+    {   5, CHTYPE_SATELLITE, 1, "232"},  /* 232ch：放送大学キャンパスon */
     {   5, CHTYPE_SATELLITE, 2, "531"},  /* 531ch：放送大学ラジオ */
     /* ch.13 */
     {   6, CHTYPE_SATELLITE, 0, "141"},  /* 141ch：BS日テレ */
@@ -112,7 +110,6 @@ ISDB_T_FREQ_CONV_TABLE    isdb_t_conv_table[] = {
     /* ch.23 */
     {  11, CHTYPE_SATELLITE, 0, "251"},  /* 251ch：BS釣りビジョン */
     {  11, CHTYPE_SATELLITE, 1, "255"},  /* 255ch：日本映画専門チャンネル */
-    {  11, CHTYPE_SATELLITE, 2, "258"},  /* 258ch：Dlife */
 
     {  12, CHTYPE_SATELLITE, 0, "CS2"},  /* ND2：
                                           * 237ch：スター・チャンネル プラス
