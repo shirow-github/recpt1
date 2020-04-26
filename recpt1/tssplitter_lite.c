@@ -417,6 +417,7 @@ static int AnalyzePat(splitter *sp, unsigned char *buf)
 	unsigned char *pmt_pids = sp->pmt_pids;
 
 	char chosen_sid[512];
+	char *chosen_sidp = chosen_sid;
 	chosen_sid[0] = '\0';
 
 	if(pat == NULL) {
@@ -461,7 +462,7 @@ static int AnalyzePat(splitter *sp, unsigned char *buf)
 					sid_found = TRUE;
 					sp->pmt_version[sp->pmt_retain].pid = pid;
 					sp->pmt_retain += 1;
-					sprintf(chosen_sid, "%s %d", *chosen_sid ? chosen_sid : "", service_id);
+					chosen_sidp += sprintf(chosen_sidp, "%s %d", *chosen_sid ? chosen_sidp : "", service_id);
 				}
 				else if(!strcasecmp(*p, "hd") || !strcasecmp(*p, "sd1")) {
 					/* hd/sd1 指定時には1番目のサービスを保存する */
@@ -473,7 +474,7 @@ static int AnalyzePat(splitter *sp, unsigned char *buf)
 						sid_found = TRUE;
 						sp->pmt_version[sp->pmt_retain].pid = pid;
 						sp->pmt_retain += 1;
-						sprintf(chosen_sid, "%s %d", *chosen_sid ? chosen_sid : "", service_id);
+						chosen_sidp += sprintf(chosen_sidp, "%s %d", *chosen_sid ? chosen_sidp : "", service_id);
 					}
 				}
 				else if(!strcasecmp(*p, "sd2")) {
@@ -486,7 +487,7 @@ static int AnalyzePat(splitter *sp, unsigned char *buf)
 						sid_found = TRUE;
 						sp->pmt_version[sp->pmt_retain].pid = pid;
 						sp->pmt_retain += 1;
-						sprintf(chosen_sid, "%s %d", *chosen_sid ? chosen_sid : "", service_id);
+						chosen_sidp += sprintf(chosen_sidp, "%s %d", *chosen_sid ? chosen_sidp : "", service_id);
 					}
 				}
 				else if(!strcasecmp(*p, "sd3")) {
@@ -499,7 +500,7 @@ static int AnalyzePat(splitter *sp, unsigned char *buf)
 						sid_found = TRUE;
 						sp->pmt_version[sp->pmt_retain].pid = pid;
 						sp->pmt_retain += 1;
-						sprintf(chosen_sid, "%s %d", *chosen_sid ? chosen_sid : "", service_id);
+						chosen_sidp += sprintf(chosen_sidp, "%s %d", *chosen_sid ? chosen_sidp : "", service_id);
 					}
 				}
 				else if(!strcasecmp(*p, "1seg")) {
@@ -512,7 +513,7 @@ static int AnalyzePat(splitter *sp, unsigned char *buf)
 						sid_found = TRUE;
 						sp->pmt_version[sp->pmt_retain].pid = pid;
 						sp->pmt_retain += 1;
-						sprintf(chosen_sid, "%s %d", *chosen_sid ? chosen_sid : "", service_id);
+						chosen_sidp += sprintf(chosen_sidp, "%s %d", *chosen_sid ? chosen_sidp : "", service_id);
 					}
 				}
 				else if(!strcasecmp(*p, "all")) {
@@ -524,7 +525,7 @@ static int AnalyzePat(splitter *sp, unsigned char *buf)
 					sid_found = TRUE;
 					sp->pmt_version[sp->pmt_retain].pid = pid;
 					sp->pmt_retain += 1;
-					sprintf(chosen_sid, "%s %d", *chosen_sid ? chosen_sid : "", service_id);
+					chosen_sidp += sprintf(chosen_sidp, "%s %d", *chosen_sid ? chosen_sidp : "", service_id);
 					break;
 				}
 				else if(!strcasecmp(*p, "epg")) {
@@ -563,7 +564,7 @@ static int AnalyzePat(splitter *sp, unsigned char *buf)
 				sid_found = TRUE;
 				sp->pmt_version[sp->pmt_retain].pid = pid;
 				sp->pmt_retain += 1;
-				sprintf(chosen_sid, "%s %d", *chosen_sid ? chosen_sid : "", service_id);
+			chosen_sidp += sprintf(chosen_sidp, "%s %d", *chosen_sid ? chosen_sidp : "", service_id);
 			}
 		}
 
