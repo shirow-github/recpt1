@@ -12,9 +12,10 @@ AC_PROG_CC
 # Checks for b25 support.
 AC_ARG_ENABLE(b25,
   [AS_HELP_STRING([--enable-b25],[enable b25 support])],
-  [AC_CHECK_LIB([pcsclite], [main], , [AC_MSG_WARN(libpcsclite is not available.)])]
-  [AC_CHECK_LIB([aribb25], [create_arib_std_b25], , [AC_MSG_WARN(libarb25 is not available.)], [-lpcsclite])]
+  [AC_CHECK_LIB([pcsclitebcas], [main], , [AC_MSG_WARN(libpcsclitebcas is not available.)])]
+  [AC_CHECK_LIB([aribb25], [create_arib_std_b25], , [AC_MSG_WARN(libaribb25 is not available.)], [-lpcsclitebcas])]
 )
+
 
 # Checks for libraries.
 AC_CHECK_LIB([m], [log10])
