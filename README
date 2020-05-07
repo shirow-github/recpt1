@@ -6,7 +6,9 @@ Linux用PT1/PT2/PT3録画プログラムです。
 ※ドライバー部分は本家やその他分家（↓）のものをお使い下さい。
 　PT1/PT2：http://sourceforge.jp/projects/pt1dvr/
 　PT3：https://github.com/m-tsudo/pt3
-※libarib25(shirow-github版)はこちら→ https://github.com/shirow-github/libarib25
+
+※libarib25(shirow-github版)はこちら → https://github.com/shirow-github/libarib25
+※libpcsclite-bcasはこちら	     → https://github.com/shirow-github/libpcsclite-bcas
 
 cd recpt1/recpt1
 ./autogen.sh
@@ -62,5 +64,5 @@ Special Thanks:
 ・2chの「Linuxでテレビ総合」スレッドの皆様
 
 動作確認環境:
-  CentOS 6.3 GNU/Linux
-  Linux 2.6.32 SMP i686
+  VineLinux Seed 7.0 GNU/Linux
+  Linux 4.14.174 SMP i686

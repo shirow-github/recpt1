@@ -16,7 +16,6 @@ AC_ARG_ENABLE(b25,
   [AC_CHECK_LIB([aribb25], [create_arib_std_b25], , [AC_MSG_WARN(libaribb25 is not available.)], [-lpcsclitebcas])]
 )
 
-
 # Checks for libraries.
 AC_CHECK_LIB([m], [log10])
 AC_CHECK_LIB([pthread], [pthread_kill])
