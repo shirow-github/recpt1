@@ -21,6 +21,12 @@ AC_ARG_ENABLE(softcas,
   [AC_CHECK_LIB([aribb25], [create_arib_std_b25], , [AC_MSG_WARN(libaribb25 is not available.)], [-lpcsclitebcas])]
 )
 
+if test x"${enable_b25}" = x"yes"; then
+	if test x"${enable_softcas}" = x"yes"; then
+		AC_DEFINE(HAVE_LIBPCSCLITEBCAS, 0, [Define to 1 if you want to ensure libpcsclitebcas])
+	fi
+fi
+
 # Checks for libraries.
 AC_CHECK_LIB([m], [log10])
 AC_CHECK_LIB([pthread], [pthread_kill])
