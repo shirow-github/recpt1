@@ -12,7 +12,7 @@ Linux用PT1/PT2/PT3録画プログラムです。
 
 cd recpt1/recpt1
 ./autogen.sh
-./configure --enable-b25
+./configure --enable-b25 ※libpcsclite-bcasを使用する場合は、--enable-softcas
 make
 でビルドした後、
 ./recpt1 録画するチャンネル 録画秒数 出力先ファイル名
