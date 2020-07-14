@@ -64,5 +64,5 @@ Special Thanks:
 ・2chの「Linuxでテレビ総合」スレッドの皆様
 
 動作確認環境:
-  VineLinux Seed 7.0 GNU/Linux
-  Linux 4.14.174 SMP i686
+  Ubuntu 20.04 LTS GNU/Linux
+  Linux 5.4.0-40-generic SMP x86_64
