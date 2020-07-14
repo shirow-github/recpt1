@@ -918,7 +918,9 @@ while(1){	// http-server add-
 
 	if(use_http){	// http-server add-
 		char header[] =  "HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nCache-Control: no-cache\r\n\r\n";
-		write(connected_socket, header, strlen(header));
+
+		(void)result;
+		result = write(connected_socket, header, strlen(header));
 
 		//set write target to http
 		tdata.wfd = connected_socket;
