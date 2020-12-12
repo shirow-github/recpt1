@@ -294,7 +294,7 @@ reader_func(void *p)
 //    struct sockaddr_in *addr = NULL;
     BUFSZ *qbuf;
     static splitbuf_t splitbuf;
-    ARIB_STD_B25_BUFFER sbuf, dbuf, buf;
+    ARIB_STD_B25_BUFFER sbuf, buf;
     int code;
     int split_select_finish = TSS_ERROR;
 
@@ -323,18 +323,12 @@ reader_func(void *p)
         sbuf.data = qbuf->buffer;
         sbuf.size = qbuf->size;
 
-        buf = sbuf; /* default */
-
         if(use_b25) {
-            code = b25_decode(dec, &sbuf, &dbuf);
-            if(code < 0) {
-                fprintf(stderr, "b25_decode failed (code=%d). fall back to encrypted recording.\n", code);
-                use_b25 = FALSE;
-            }
-            else
-                buf = dbuf;
+            b25_decode(dec, &sbuf, &buf);
+	}
+	else {
+	    buf = sbuf;
         }
-
 
         if(use_splitter) {
             splitbuf.buffer_filled = 0;
@@ -437,14 +431,11 @@ reader_func(void *p)
         /* normal exit */
         if((f_exit && !p_queue->num_used) || file_err) {
 
-            buf = sbuf; /* default */
-
             if(use_b25) {
-                code = b25_finish(dec, &sbuf, &dbuf);
-                if(code < 0)
-                    fprintf(stderr, "b25_finish failed\n");
-                else
-                    buf = dbuf;
+                b25_finish(dec, &sbuf, &buf);
+	    }
+	    else {
+		buf = sbuf;
             }
 
             if(use_splitter) {
