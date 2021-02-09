@@ -223,8 +223,8 @@ show_channels(void)
 	fprintf(stderr, "BS19_0: J SPORTS 4\n");
 	fprintf(stderr, "BS19_1: J SPORTS 1\n");
 	fprintf(stderr, "BS19_2: J SPORTS 2\n");
+	fprintf(stderr, "BS19_3: J SPORTS 3\n");
 	fprintf(stderr, "BS21_0: WOWOWプラス\n");
-	fprintf(stderr, "BS21_1: J SPORTS 3\n");
 	fprintf(stderr, "BS21_2: グリーンチャンネル\n");
 	fprintf(stderr, "BS23_0: BS釣りビジョン\n");
 	fprintf(stderr, "BS23_1: 日本映画専門チャンネル\n");

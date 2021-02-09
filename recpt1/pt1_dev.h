@@ -103,9 +103,9 @@ ISDB_T_FREQ_CONV_TABLE    isdb_t_conv_table[] = {
     {   9, CHTYPE_SATELLITE, 0, "245"},  /* 245ch：J SPORTS 4 */
     {   9, CHTYPE_SATELLITE, 1, "242"},  /* 242ch：J SPORTS 1 */
     {   9, CHTYPE_SATELLITE, 2, "243"},  /* 243ch：J SPORTS 2 */
+    {   9, CHTYPE_SATELLITE, 3, "244"},  /* 244ch：J SPORTS 3 */
     /* ch.21 */
     {  10, CHTYPE_SATELLITE, 0, "252"},  /* 252ch：WOWOWプラス */
-    {  10, CHTYPE_SATELLITE, 1, "244"},  /* 244ch：J SPORTS 3 */
     {  10, CHTYPE_SATELLITE, 2, "234"},  /* 234ch：グリーンチャンネル */
     /* ch.23 */
     {  11, CHTYPE_SATELLITE, 0, "251"},  /* 251ch：BS釣りビジョン */
