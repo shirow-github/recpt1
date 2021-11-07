@@ -37,6 +37,8 @@ static char** AnalyzeSid(char *sid);
 static int AnalyzePmt(splitter *sp, unsigned char *buf, unsigned char mark);
 static int GetCrc32(unsigned char *data, int len);
 static int GetPid(unsigned char *data);
+static void addEpgPids( splitter *sp );
+static char *strcatNum( char *chosen_sid, int service_id);
 
 /**
  * サービスID解析
@@ -292,6 +294,7 @@ static int RescanPID(splitter *splitter, unsigned char *buf)
 			    splitter->pids[i] -= 1;
 		    }
 		}
+		addEpgPids( splitter );
 		fprintf(stderr, "Rescan PID End\n");
 	}
 
@@ -417,7 +420,7 @@ static int AnalyzePat(splitter *sp, unsigned char *buf)
 	unsigned char *pmt_pids = sp->pmt_pids;
 
 	char chosen_sid[512];
-	char *chosen_sidp = chosen_sid;
+	//char *chosen_sidp = chosen_sid;
 	chosen_sid[0] = '\0';
 
 	if(pat == NULL) {
@@ -462,7 +465,8 @@ static int AnalyzePat(splitter *sp, unsigned char *buf)
 					sid_found = TRUE;
 					sp->pmt_version[sp->pmt_retain].pid = pid;
 					sp->pmt_retain += 1;
-					chosen_sidp += sprintf(chosen_sidp, "%s %d", *chosen_sid ? chosen_sidp : "", service_id);
+					//chosen_sidp += sprintf(chosen_sidp, "%s %d", *chosen_sid ? chosen_sidp : "", service_id);
+					strcatNum( chosen_sid, service_id);
 				}
 				else if(!strcasecmp(*p, "hd") || !strcasecmp(*p, "sd1")) {
 					/* hd/sd1 指定時には1番目のサービスを保存する */
@@ -474,7 +478,8 @@ static int AnalyzePat(splitter *sp, unsigned char *buf)
 						sid_found = TRUE;
 						sp->pmt_version[sp->pmt_retain].pid = pid;
 						sp->pmt_retain += 1;
-						chosen_sidp += sprintf(chosen_sidp, "%s %d", *chosen_sid ? chosen_sidp : "", service_id);
+						//chosen_sidp += sprintf(chosen_sidp, "%s %d", *chosen_sid ? chosen_sidp : "", service_id);
+						strcatNum( chosen_sid, service_id);
 					}
 				}
 				else if(!strcasecmp(*p, "sd2")) {
@@ -487,7 +492,8 @@ static int AnalyzePat(splitter *sp, unsigned char *buf)
 						sid_found = TRUE;
 						sp->pmt_version[sp->pmt_retain].pid = pid;
 						sp->pmt_retain += 1;
-						chosen_sidp += sprintf(chosen_sidp, "%s %d", *chosen_sid ? chosen_sidp : "", service_id);
+						//chosen_sidp += sprintf(chosen_sidp, "%s %d", *chosen_sid ? chosen_sidp : "", service_id);
+						strcatNum( chosen_sid, service_id);
 					}
 				}
 				else if(!strcasecmp(*p, "sd3")) {
@@ -500,7 +506,8 @@ static int AnalyzePat(splitter *sp, unsigned char *buf)
 						sid_found = TRUE;
 						sp->pmt_version[sp->pmt_retain].pid = pid;
 						sp->pmt_retain += 1;
-						chosen_sidp += sprintf(chosen_sidp, "%s %d", *chosen_sid ? chosen_sidp : "", service_id);
+						//chosen_sidp += sprintf(chosen_sidp, "%s %d", *chosen_sid ? chosen_sidp : "", service_id);
+						strcatNum( chosen_sid, service_id);
 					}
 				}
 				else if(!strcasecmp(*p, "1seg")) {
@@ -513,7 +520,8 @@ static int AnalyzePat(splitter *sp, unsigned char *buf)
 						sid_found = TRUE;
 						sp->pmt_version[sp->pmt_retain].pid = pid;
 						sp->pmt_retain += 1;
-						chosen_sidp += sprintf(chosen_sidp, "%s %d", *chosen_sid ? chosen_sidp : "", service_id);
+						//chosen_sidp += sprintf(chosen_sidp, "%s %d", *chosen_sid ? chosen_sidp : "", service_id);
+						strcatNum( chosen_sid, service_id);
 					}
 				}
 				else if(!strcasecmp(*p, "all")) {
@@ -525,7 +533,9 @@ static int AnalyzePat(splitter *sp, unsigned char *buf)
 					sid_found = TRUE;
 					sp->pmt_version[sp->pmt_retain].pid = pid;
 					sp->pmt_retain += 1;
-					chosen_sidp += sprintf(chosen_sidp, "%s %d", *chosen_sid ? chosen_sidp : "", service_id);
+					//chosen_sidp += sprintf(chosen_sidp, "%s %d", *chosen_sid ? chosen_sidp : "", service_id);
+					strcatNum( chosen_sid, service_id);
+
 					break;
 				}
 				else if(!strcasecmp(*p, "epg")) {
@@ -564,7 +574,8 @@ static int AnalyzePat(splitter *sp, unsigned char *buf)
 				sid_found = TRUE;
 				sp->pmt_version[sp->pmt_retain].pid = pid;
 				sp->pmt_retain += 1;
-			chosen_sidp += sprintf(chosen_sidp, "%s %d", *chosen_sid ? chosen_sidp : "", service_id);
+				//chosen_sidp += sprintf(chosen_sidp, "%s %d", *chosen_sid ? chosen_sidp : "", service_id);
+				strcatNum( chosen_sid, service_id);
 			}
 		}
 
@@ -817,4 +828,32 @@ static int GetPid(
 	unsigned char* data)				// [in]		取得対象データのポインタ
 {
 	return ((data[0] & 0x1F) << 8) + data[1];
+}
+
+/* 
+ * epg抽出に必要なPIDのフラグを立てる
+ */
+static void addEpgPids( splitter *sp ) {
+  for( int i=0; sp->sid_list[i] != NULL; i++)
+	{
+	  if( ! strcasecmp( sp->sid_list[i], "epg")) {
+		//fprintf(stderr, "addEpgPids() %s\n",sp->sid_list[i]);
+		*(sp->pids+0x11) = 1;	// SDT
+		*(sp->pids+0x12) = 1;	// EIT
+		*(sp->pids+0x23) = 1;	// SDTT
+		*(sp->pids+0x29) = 1;	// CDT
+	  }
+	}
+}
+
+/* 文字列に数字を追加 */
+static char *strcatNum( char *chosen_sid, int service_id)
+{
+  char	tmp[512];
+
+  if ( chosen_sid != NULL ) {
+	sprintf(tmp, " %d",service_id );
+	strcat( chosen_sid, tmp );
+  }
+  return chosen_sid ;
 }
