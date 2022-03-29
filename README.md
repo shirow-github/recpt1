@@ -1,6 +1,6 @@
 # recpt1 (shirow-github Version)
 
-*Current Version:* 1.2.7  
+*Current Version:* 1.2.8  
 
 PT1/PT2/PT3をLinuxで使う為の録画ツール(shirow-github版)  
 ※こちらはフォーク版ですのでご注意下さい。
