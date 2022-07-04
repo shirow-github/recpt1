@@ -8,6 +8,7 @@
 /driver-pt1/Module.symvers
 /driver-pt1/modules.order
 /driver-pt1/pt1_drv.mod.c
+/driver-pt1/pt1_drv.mod
 /driver-pt1/version.h
 /recpt1/autom4te.cache
 /recpt1/config.h.in
