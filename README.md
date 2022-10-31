@@ -39,7 +39,7 @@ $ recpt1 録画するチャンネル番号 録画秒数 出力先ファイル名
 詳しいオプションはrecpt1 --helpをご覧下さい。
 ```
 ----
-## チャンネル番号 (2022年3月9日現在)
+## チャンネル番号 (2022年11月1日現在)
 13-62: Terrestrial Channels
 
 BS01_0: BS朝日  
@@ -55,7 +55,6 @@ BS07_2: BS日テレ 4K
 BS09_0: BS11  
 BS09_1: スターチャンネル1  
 BS09_2: TwellV  
-BS11_0: BSスカパー!  
 BS11_1: 放送大学  
 BS11_2: BS釣りビジョン  
 BS13_0: BS日テレ  
@@ -84,8 +83,8 @@ CS2-CS24: CS Channels
 
 ----
 ##  動作確認環境
-Ubuntu 20.04.4 LTS GNU/Linux  
-Linux 5.13.0-30-generic SMP x86_64
+Ubuntu 22.04.1 LTS GNU/Linux  
+Linux 5.15.0-52-generic SMP x86_64
 
 ## Special Thanks
 2chの「Linuxでテレビ総合」スレッドの皆様
