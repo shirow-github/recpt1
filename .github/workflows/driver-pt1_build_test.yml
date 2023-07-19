@@ -1,0 +1,26 @@
+name: driver-pt1 build test
+
+on:
+  push:
+    branches: [ "master" ]
+    paths:
+      - 'driver-pt1/**'
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+  
+defaults:
+  run:
+    working-directory: driver-pt1
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: pwd
+      run: pwd
+    - name: make
+      run: make

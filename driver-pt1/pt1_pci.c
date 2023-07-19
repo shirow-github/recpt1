@@ -659,7 +659,11 @@ int		pt1_makering(struct pci_dev *pdev, PT1_DEVICE *dev_conf)
 
 		dmactl = dev_conf->dmactl[lp];
 		for(lp2 = 0 ; lp2 < DMA_RING_MAX ; lp2++){
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+			dmaptr = dma_alloc_coherent(&pdev->dev, DMA_SIZE, &dmactl->ring_dma[lp2], GFP_KERNEL);
+#else
 			dmaptr = pci_alloc_consistent(pdev, DMA_SIZE, &dmactl->ring_dma[lp2]);
+#endif
 			if(dmaptr == NULL){
 				PT1_PRINTK(0, KERN_ERR, "DMA ALLOC ERROR\n");
 				return -1 ;
@@ -681,7 +685,11 @@ int		pt1_dma_init(struct pci_dev *pdev, PT1_DEVICE *dev_conf)
 	void	*ptr ;
 
 	for(lp = 0 ; lp < DMA_RING_SIZE ; lp++){
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+		ptr = dma_alloc_coherent(&pdev->dev, DMA_SIZE, &dev_conf->ring_dma[lp], GFP_KERNEL);
+#else
 		ptr = pci_alloc_consistent(pdev, DMA_SIZE, &dev_conf->ring_dma[lp]);
+#endif
 		if(ptr == NULL){
 			PT1_PRINTK(0, KERN_ERR, "DMA ALLOC ERROR\n");
 			return -1 ;
@@ -699,11 +707,20 @@ int		pt1_dma_free(struct pci_dev *pdev, PT1_DEVICE *dev_conf)
 
 	for(lp = 0 ; lp < DMA_RING_SIZE ; lp++){
 		if(dev_conf->dmaptr[lp] != NULL){
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+			dma_free_coherent(&pdev->dev, DMA_SIZE,
+								dev_conf->dmaptr[lp], dev_conf->ring_dma[lp]);
+#else
 			pci_free_consistent(pdev, DMA_SIZE,
 								dev_conf->dmaptr[lp], dev_conf->ring_dma[lp]);
+#endif
 			for(lp2 = 0 ; lp2 < DMA_RING_MAX ; lp2++){
 				if((dev_conf->dmactl[lp])->data[lp2] != NULL){
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+					dma_free_coherent(&pdev->dev, DMA_SIZE,
+#else
 					pci_free_consistent(pdev, DMA_SIZE,
+#endif
 										(dev_conf->dmactl[lp])->data[lp2],
 										(dev_conf->dmactl[lp])->ring_dma[lp2]);
 				}
@@ -731,7 +748,11 @@ static int pt1_pci_init_one (struct pci_dev *pdev,
 	rc = pci_enable_device(pdev);
 	if (rc)
 		return rc;
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+	rc = dma_set_mask(&pdev->dev, DMA_BIT_MASK(32));
+#else
 	rc = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
+#endif
 	if (rc) {
 		PT1_PRINTK(0, KERN_ERR, "DMA MASK ERROR");
 		return rc;
@@ -1030,7 +1051,11 @@ static struct pci_driver pt1_driver = {
 static int __init pt1_pci_init(void)
 {
 	PT1_PRINTK(0, KERN_INFO, "%s", version);
+#if LINUX_VERSION_CODE < KERNEL_VERSION(6,4,0)
 	pt1video_class = class_create(THIS_MODULE, DRIVERNAME);
+#else
+	pt1video_class = class_create(DRIVERNAME);
+#endif
 	if (IS_ERR(pt1video_class))
 		return PTR_ERR(pt1video_class);
 	return pci_register_driver(&pt1_driver);

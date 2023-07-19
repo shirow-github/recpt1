@@ -1,0 +1,30 @@
+name: recpt1 build test
+
+on:
+  push:
+    branches: [ "master" ]
+    paths:
+      - 'recpt1/**'
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: recpt1
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: pwd
+      run: pwd
+    - name: autogen.sh
+      run: ./autogen.sh
+    - name: configure
+      run: ./configure
+    - name: make
+      run: make
