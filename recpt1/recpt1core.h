@@ -45,17 +45,17 @@
 /* type definitions */
 typedef int boolean;
 
-typedef struct {
+typedef struct sock_data {
     int sfd;    /* socket fd */
     struct sockaddr_in addr;
 } sock_data;
 
-typedef struct {
+typedef struct msgbuf {
     long    mtype;
     char    mtext[MSGSZ];
 } message_buf;
 
-typedef struct {
+typedef struct thread_data {
     int tfd;    /* tuner fd */ //xxx variable
 
     int wfd;    /* output file fd */ //invariable

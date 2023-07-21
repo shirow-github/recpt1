@@ -49,6 +49,50 @@ if test "$DIE" -eq 1; then
         exit 1
 fi
 
+# pt1_dev.h tuner device setting
+ground=""
+satellite=""
+
+tunerSet()
+{
+  local devicebase='/dev/'$1
+  local number=0
+  while [ -e ${devicebase}${number} ]
+  do
+    if [ ${satellite} ]; then
+      satellite=${satellite}','
+      ground=${ground}','
+    fi
+    satellite=${satellite}'"'${devicebase}${number}'",'
+    number=`expr $number + 1`
+    satellite=${satellite}'"'${devicebase}${number}'"'
+    number=`expr $number + 1`
+    ground=${ground}'"'${devicebase}${number}'",'
+    number=`expr $number + 1`
+    ground=${ground}'"'${devicebase}${number}'"'
+    number=`expr $number + 1`
+  done
+}
+
+tunerSet 'pt1video'
+tunerSet 'pt3video'
+tunerSet 'px4video'
+tunerSet 'pxmlt5video'
+tunerSet 'pxmlt8video'
+tunerSet 'isdb2056video'
+tunerSet 'isdb6014video'
+
+for i in $@; do
+  tunerSet ${i}
+done
+
+if [ ${satellite} ]; then
+  sed -e "s!%SATELLITE%!${satellite}!" -e "s!%GROUND%!${ground}!" ./pt1_dev.base.h > ./pt1_dev.h
+else
+  echo 'Tuner device unfind.'
+  exit 1
+fi
+
 echo "Generating configure script and Makefiles for recpt1."
 
 echo "Running aclocal ..."
