@@ -77,6 +77,11 @@ tunerSet()
 tunerSet 'pt1video'
 tunerSet 'pt3video'
 tunerSet 'px4video'
+tunerSet 'pxmlt5video'
+tunerSet 'pxmlt8video'
+tunerSet 'isdb2056video'
+tunerSet 'isdb6014video'
+
 for i in $@; do
   tunerSet ${i}
 done
