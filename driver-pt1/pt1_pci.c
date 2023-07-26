@@ -1051,10 +1051,10 @@ static struct pci_driver pt1_driver = {
 static int __init pt1_pci_init(void)
 {
 	PT1_PRINTK(0, KERN_INFO, "%s", version);
-#if LINUX_VERSION_CODE < KERNEL_VERSION(6,4,0)
-	pt1video_class = class_create(THIS_MODULE, DRIVERNAME);
-#else
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6,4,0)
 	pt1video_class = class_create(DRIVERNAME);
+#else
+	pt1video_class = class_create(THIS_MODULE, DRIVERNAME);
 #endif
 	if (IS_ERR(pt1video_class))
 		return PTR_ERR(pt1video_class);
