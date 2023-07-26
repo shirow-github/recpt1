@@ -84,7 +84,7 @@ CS2-CS24: CS Channels
 
 ----
 ##  動作確認環境
-Ubuntu 22.04.2 LTS GNU/Linux
+Ubuntu 22.04.2 LTS GNU/Linux  
 Linux 5.19.0-50-generic SMP x86_64
 
 ## Special Thanks
