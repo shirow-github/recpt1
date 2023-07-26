@@ -13,10 +13,28 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # ビルド処理に置き換える
-      - run: |
-          touch release
-          zip release.zip release
+      # コンパイラーをインストールする
+      # 参照：https://github.com/macaron/recpt1-static-build
+      - name: Install Compiler
+        working-directory: /usr/local/bin
+        run: |
+          wget https://musl.libc.org/releases/musl-1.2.4.tar.gz
+          tar -xvf musl-1.2.4.tar.gz
+          cd musl-1.2.4
+          ./configure --prefix=$HOME/musl --exec-prefix=$HOME --syslibdir=$HOME/musl/lib
+          make -j$(nproc)
+          make install
+          echo "$HOME/bin" >> $GITHUB_PATH
+
+      # recpt1をビルドし、ZIPファイルにまとめる
+      - name: Build for recpt1
+        working-directory: recpt1
+        run: |
+          sudo apt install -y --no-install-recommends autoconf automake
+          ./autogen.sh
+          ./configure CC=musl-gcc --enable-b25
+          make
+          zip release.zip recpt1 recpt1ctl checksignal
 
       # タグ名を取得する
       - name: Set_version
