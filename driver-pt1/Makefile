@@ -1,7 +1,7 @@
 TARGET := pt1_drv.ko
 VERBOSITY = 0
 REL_VERSION = "1.1.6"
-REL_DATE = "2023-07-11"
+REL_DATE = "2023-07-26"
 EXTRA_CFLAGS += -Wformat=2
 
 all: ${TARGET}
