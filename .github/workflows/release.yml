@@ -28,7 +28,7 @@ jobs:
 
       # recpt1をビルドし、ZIPファイルにまとめる
       - name: Build for recpt1
-      working-directory: recpt1
+        working-directory: recpt1
         run: |
           sudo apt-get install -y --no-install-recommends autoconf automake
           sed -i 's/CFLAGS   = -O2 -g -pthread/CFLAGS   = -static -O2 -g -pthread/g' Makefile.in
