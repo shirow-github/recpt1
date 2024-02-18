@@ -49,6 +49,17 @@ jobs:
           sudo chmod a+rw /dev/pt3video6
           sudo chmod a+rw /dev/pt3video7
 
+      # タグ名を取得すし、バージョン番号を設定する
+      - name: Set_version
+        id: set_version
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION=${GITHUB_REF/refs\/tags\//}
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "archive_path=recpt1_${VERSION}.zip" >> $ENV:GITHUB_OUTPUT
+
       # recpt1をスタティックビルドし、バイナリファイルを作成する
       - name: Build for recpt1
         working-directory: recpt1
@@ -66,15 +77,27 @@ jobs:
           file recpt1
           ./recpt1 -v
 
-      # タグ名を取得する
-      - name: Set_version
-        id: set_version
+      # バイナリファイルを、ZIP形式で圧縮する
+      - name: Compress binary files into a zip file
+        run: |
+          mkdir recpt1_bin
+          Copy-Item -Path "./recpt1/recpt1" -Destination "./recpt1_bin/recpt1" -Force
+          Copy-Item -Path "./recpt1/recpt1ctl" -Destination "./recpt1_bin/recpt1ctl" -Force
+          Copy-Item -Path "./recpt1/checksignal" -Destination "./recpt1_bin/checksignal" -Force
+          7z a -tzip ${{ steps.set_version.outputs.archive_path }} recpt1_bin
+
+      # バイナリファイルをアップする
+      - name: upload_release_asset
+        uses: actions/upload-artifact@v4
+        # タグが push された場合のみ実行される
         if: startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          VERSION=${GITHUB_REF/refs\/tags\//}
-          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+        with:
+          # リリースするバイナリファイル
+          files: |
+            name: ${{ steps.set_version.outputs.archive_path }}
+            path: ${{ steps..set_version.outputs.archive_path }}
 
       # リリース文書を作成する
       - name: create_release
@@ -92,17 +115,3 @@ jobs:
             下書きかつプレリリースの状態で作成されます。
           draft: true # 下書き状態で作成する場合は true (省略時 false)
           prerelease: true # プレリリース表示を付ける場合は true (省略時 false)
-
-      # バイナリファイルをリリースする
-      - name: upload_release_asset
-        uses: softprops/action-gh-release@v1
-        # タグが push された場合のみ実行される
-        if: startsWith(github.ref, 'refs/tags/')
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          # リリースするバイナリファイル
-          files: |
-            recpt1/recpt1
-            recpt1/recpt1ctl
-            recpt1/checksignal
