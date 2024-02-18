@@ -8,15 +8,15 @@ TARGET = recpt1
 TARGET2 = recpt1ctl
 TARGET3 = checksignal
 TARGETS = $(TARGET) $(TARGET2) $(TARGET3)
-RELEASE_VERSION = "1.2.10"
+RELEASE_VERSION = "1.2.11"
 
 CPPFLAGS = -I../driver-pt1 -Wall -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
-CFLAGS   = -static -O2 -g -pthread
+CFLAGS   = -O2 -g -pthread
 
 LIBS     = @LIBS@
 LIBS2    = -lm
 LIBS3    = -lpthread -lm
-LDFLAGS  = -static
+LDFLAGS  =
 
 OBJS  = recpt1.o decoder.o mkpath.o tssplitter_lite.o recpt1core.o
 OBJS2 = recpt1ctl.o recpt1core.o

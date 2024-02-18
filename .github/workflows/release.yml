@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # コンパイラーをインストールする
       # 参照：https://github.com/macaron/recpt1-static-build
@@ -27,12 +27,24 @@ jobs:
           echo "$HOME/bin" >> $GITHUB_PATH
 
       # recpt1をビルドし、ZIPファイルにまとめる
+      - name: Create a temporary device file
+        run: |
+          sudo mknod /dev/pt1video0 c 235 0
+          sudo mknod /dev/pt1video1 c 235 1
+          sudo mknod /dev/pt1video2 c 235 2
+          sudo mknod /dev/pt1video3 c 235 3
+          sudo chmod a+rw /dev/pt1video0
+          sudo chmod a+rw /dev/pt1video1
+          sudo chmod a+rw /dev/pt1video2
+          sudo chmod a+rw /dev/pt1video3
       - name: Build for recpt1
         working-directory: recpt1
         run: |
-          sudo apt install -y --no-install-recommends autoconf automake
+          sudo apt-get install -y --no-install-recommends autoconf automake
+          sed -i 's/CFLAGS   = -O2 -g -pthread/CFLAGS   = -static -O2 -g -pthread/g' Makefile.in
+          sed -i 's/LDFLAGS  =/LDFLAGS  = -static/g' Makefile.in
           ./autogen.sh
-          ./configure CC=musl-gcc --enable-b25
+          ./configure --enable-b25
           make
           zip release.zip recpt1 recpt1ctl checksignal
 
