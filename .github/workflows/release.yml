@@ -57,7 +57,7 @@ jobs:
           sed -i 's/CFLAGS   = -O2 -g -pthread/CFLAGS   = -static -O2 -g -pthread/g' Makefile.in
           sed -i 's/LDFLAGS  =/LDFLAGS  = -static/g' Makefile.in
           ./autogen.sh
-          ./configure CC=musl-gcc --enable-b25 
+          ./configure CC=musl-gcc --enable-b25
           make
 
       - name: Show Version for recpt1
@@ -103,7 +103,6 @@ jobs:
         with:
           # リリースするバイナリファイル
           files: |
-            README.md
             recpt1/recpt1
             recpt1/recpt1ctl
             recpt1/checksignal
