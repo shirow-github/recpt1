@@ -18,6 +18,7 @@ PT1/PT2/PT3をLinuxで使う為の録画ツール(shirow-github版)
 
 ----
 ##  インストール方法
+#### ◎recpt1
 ```bash
 $ cd recpt1/recpt1
 $ ./autogen.sh
@@ -25,11 +26,29 @@ $ ./configure --enable-b25 ※libpcsclite-bcasを使用する場合は、--enabl
 $ make
 $ sudo make install
 ```
+#### ◎PT1/PT2ドライバー(DKMS)
+```bash
+$ cd driver-pt1
+$ sudo ${SHELL} ./dkms.install
+$ sudo reboot
+```
+> [!WARNING]
+> なお「dkms.install」実行後は、使用するシステムを必ず再起動して下さい。
 
 ##  アンインストール方法
+#### ◎recpt1
 ```bash
 $ sudo make uninstall
 ```
+
+#### ◎PT1/PT2ドライバー(DKMS)
+```bash
+$ cd driver-pt1
+$ sudo ${SHELL} ./dkms.uninstall
+$ sudo reboot
+```
+> [!WARNING]
+> なお「dkms.uninstall」実行後は、使用するシステムを必ず再起動して下さい。
 
 ##  使用方法
 ```bash
