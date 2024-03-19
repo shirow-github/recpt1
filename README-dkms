@@ -7,7 +7,7 @@ $ sudo reboot
 【dkmsでのアンインストール方法】
 
 $ sudo ${SHELL} ./dkms.uninstall
-$ dkms reboot
+$ sudo reboot
 
 
 【注意事項】
