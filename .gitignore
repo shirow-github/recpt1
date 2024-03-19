@@ -2,6 +2,7 @@
 *~
 .*.cmd
 *.swp
+*.bak
 /driver-pt1/pt1_drv.ko
 /driver-pt1/.tmp_versions/
 /driver-pt1/.tmp_versions/*

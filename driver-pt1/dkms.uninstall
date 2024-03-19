@@ -2,7 +2,7 @@ if [ "$ZSH_NAME" = "zsh" ];then
   setopt localoptions ksharrays
 fi
 
-. ./driver/dkms.conf
+. ./dkms.conf
 
 su -c "
 dkms remove -m $PACKAGE_NAME -v $PACKAGE_VERSION --all;
