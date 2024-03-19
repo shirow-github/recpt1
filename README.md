@@ -28,7 +28,7 @@ $ sudo make install
 ```
 #### ◎PT1/PT2ドライバー(DKMS)
 ```bash
-$ cd driver-pt1
+$ cd recpt1/driver-pt1
 $ sudo ${SHELL} ./dkms.install
 $ sudo reboot
 ```
@@ -43,7 +43,7 @@ $ sudo make uninstall
 
 #### ◎PT1/PT2ドライバー(DKMS)
 ```bash
-$ cd driver-pt1
+$ cd recpt1/driver-pt1
 $ sudo ${SHELL} ./dkms.uninstall
 $ sudo reboot
 ```
