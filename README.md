@@ -73,7 +73,6 @@ BS07_0: BS朝日 4K
 BS07_1: BSテレ東 4K  
 BS07_2: BS日テレ 4K  
 BS09_0: BS11  
-BS09_1: スターチャンネル1  
 BS09_2: TwellV  
 BS11_0: 放送大学  
 BS11_1: BS釣りビジョン  
@@ -81,6 +80,7 @@ BS13_0: BS日テレ
 BS13_1: BSフジ  
 BS13_2: BSアニマックス  
 BS15_0: NHK BS  
+BS15_1: スターチャンネル  
 BS17_0: NHK BSプレミアム 4K  
 BS17_1: BS-TBS 4K  
 BS17_2: BSフジ 4K  
