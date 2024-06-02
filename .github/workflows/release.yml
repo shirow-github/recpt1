@@ -18,9 +18,9 @@ jobs:
       - name: Install Compiler
         working-directory: /usr/local/bin
         run: |
-          wget https://musl.libc.org/releases/musl-latest.tar.gz
-          tar -xvf musl-latest.tar.gz
-          cd musl-latest
+          wget https://musl.libc.org/releases/musl-1.2.5.tar.gz
+          tar -xvf musl-1.2.5.tar.gz
+          cd musl-1.2.5
           ./configure --prefix=$HOME/musl --exec-prefix=$HOME --syslibdir=$HOME/musl/lib
           make -j$(nproc)
           make install
