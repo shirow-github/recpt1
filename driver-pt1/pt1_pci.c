@@ -636,7 +636,7 @@ static const struct file_operations pt1_fops = {
 	.llseek		=	no_llseek,
 };
 
-int		pt1_makering(struct pci_dev *pdev, PT1_DEVICE *dev_conf)
+static	int	pt1_makering(struct pci_dev *pdev, PT1_DEVICE *dev_conf)
 {
 	int		lp ;
 	int		lp2 ;
@@ -679,7 +679,7 @@ int		pt1_makering(struct pci_dev *pdev, PT1_DEVICE *dev_conf)
 	}
 	return 0 ;
 }
-int		pt1_dma_init(struct pci_dev *pdev, PT1_DEVICE *dev_conf)
+static	int	pt1_dma_init(struct pci_dev *pdev, PT1_DEVICE *dev_conf)
 {
 	int		lp ;
 	void	*ptr ;
@@ -699,7 +699,7 @@ int		pt1_dma_init(struct pci_dev *pdev, PT1_DEVICE *dev_conf)
 
 	return pt1_makering(pdev, dev_conf);
 }
-int		pt1_dma_free(struct pci_dev *pdev, PT1_DEVICE *dev_conf)
+static	int	pt1_dma_free(struct pci_dev *pdev, PT1_DEVICE *dev_conf)
 {
 
 	int		lp ;

@@ -35,7 +35,7 @@ static	void	stop_i2c(void __iomem *, __u32 *, __u32 *, __u32, __u32);
 
 
 // PCIに書き込むI2Cデータ生成
-void	makei2c(void __iomem *regs, __u32 base_addr, __u32 i2caddr, __u32 writemode, __u32 data_en, __u32 clock, __u32 busy)
+static	void	makei2c(void __iomem *regs, __u32 base_addr, __u32 i2caddr, __u32 writemode, __u32 data_en, __u32 clock, __u32 busy)
 {
 
 	__u32		val ;
@@ -256,7 +256,7 @@ void	blockwrite(void __iomem *regs, WBLOCK *wblock)
 
 }
 
-void	blockread(void __iomem *regs, WBLOCK *wblock, int count)
+static	void	blockread(void __iomem *regs, WBLOCK *wblock, int count)
 {
 	int		lp ;
 	int		bitpos ;

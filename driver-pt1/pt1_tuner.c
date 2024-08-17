@@ -234,7 +234,7 @@ void	set_sleepmode(void __iomem *regs, struct mutex *lock, int address, int tune
 	}
 }
 
-int		bs_frequency(void __iomem *regs, struct mutex *lock, int addr, int channel)
+static	int	bs_frequency(void __iomem *regs, struct mutex *lock, int addr, int channel)
 {
 	int		lp ;
 	int		tmcclock = FALSE ;
@@ -417,7 +417,7 @@ int		isdb_s_read_signal_strength(void __iomem *regs, struct mutex *lock, int add
 	return val3 ;
 }
 
-__u32	getfrequency_add(__u32 channel)
+static	__u32	getfrequency_add(__u32 channel)
 {
 	int		lp ;
 
@@ -428,7 +428,7 @@ __u32	getfrequency_add(__u32 channel)
 	}
 	return 0 ;
 }
-__u32	getfrequency(__u32 channel, int addfreq)
+static	__u32	getfrequency(__u32 channel, int addfreq)
 {
 	__u32	frequencyoffset = 0;
 	__u32	frequencyOffset = 0;
