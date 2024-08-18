@@ -38,6 +38,7 @@ $ sudo reboot
 ##  アンインストール方法
 #### ◎recpt1
 ```bash
+$ cd recpt1/recpt1
 $ sudo make uninstall
 ```
 
