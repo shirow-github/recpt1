@@ -67,6 +67,7 @@ BS01_0: BS朝日
 BS01_1: BS-TBS  
 BS01_2: BSテレ東  
 BS03_0: WOWOWプライム  
+BS03_1: BSアニマックス
 BS05_0: WOWOWライブ  
 BS05_1: WOWOWシネマ  
 BS07_0: BS朝日 4K  
@@ -78,7 +79,6 @@ BS11_0: 放送大学
 BS11_1: BS釣りビジョン  
 BS13_0: BS日テレ  
 BS13_1: BSフジ  
-BS13_2: BSアニマックス  
 BS15_0: NHK BS  
 BS15_1: スターチャンネル  
 BS17_0: NHK BSプレミアム 4K  

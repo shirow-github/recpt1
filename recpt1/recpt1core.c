@@ -200,6 +200,7 @@ show_channels(void)
 	fprintf(stderr, "BS01_1: BS-TBS\n");
 	fprintf(stderr, "BS01_2: BSテレ東\n");
 	fprintf(stderr, "BS03_0: WOWOWプライム\n");
+	fprintf(stderr, "BS03_1: BSアニマックス\n");
 	fprintf(stderr, "BS05_0: WOWOWライブ\n");
 	fprintf(stderr, "BS05_1: WOWOWシネマ\n");
 	fprintf(stderr, "BS07_0: BS朝日 4K\n");
@@ -211,7 +212,6 @@ show_channels(void)
 	fprintf(stderr, "BS11_1: BS釣りビジョン\n");
 	fprintf(stderr, "BS13_0: BS日テレ\n");
 	fprintf(stderr, "BS13_1: BSフジ\n");
-	fprintf(stderr, "BS13_2: BSアニマックス\n");
 	fprintf(stderr, "BS15_0: NHK BS\n");
 	fprintf(stderr, "BS15_1: スターチャンネル\n");
 	fprintf(stderr, "BS17_0: NHK BSプレミアム 4K\n");
