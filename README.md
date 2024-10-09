@@ -68,6 +68,7 @@ BS01_1: BS-TBS
 BS01_2: BSテレ東  
 BS03_0: WOWOWプライム  
 BS03_1: BSアニマックス
+BS03_2: BS釣りビジョン
 BS05_0: WOWOWライブ  
 BS05_1: WOWOWシネマ  
 BS07_0: BS朝日 4K  
@@ -76,7 +77,6 @@ BS07_2: BS日テレ 4K
 BS09_0: BS11  
 BS09_2: TwellV  
 BS11_0: 放送大学  
-BS11_1: BS釣りビジョン  
 BS13_0: BS日テレ  
 BS13_1: BSフジ  
 BS15_0: NHK BS  

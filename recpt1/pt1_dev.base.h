@@ -23,6 +23,7 @@ ISDB_T_FREQ_CONV_TABLE    isdb_t_conv_table[] = {
     /* ch.3 */
     {   1, CHTYPE_SATELLITE, 0, "191"},  /* 191ch：WOWOWプライム */
     {   1, CHTYPE_SATELLITE, 1, "236"},  /* 236ch：BSアニマックス */
+    {   1, CHTYPE_SATELLITE, 2, "251"},  /* 251ch：BS釣りビジョン */
     /* ch.5 */
     {   2, CHTYPE_SATELLITE, 0, "192"},  /* 192ch：WOWOWライブ */
     {   2, CHTYPE_SATELLITE, 1, "193"},  /* 193ch：WOWOWシネマ */
@@ -37,7 +38,6 @@ ISDB_T_FREQ_CONV_TABLE    isdb_t_conv_table[] = {
     {   5, CHTYPE_SATELLITE, 0, "231"},  /* 231ch：放送大学キャンパスex */
     {   5, CHTYPE_SATELLITE, 0, "232"},  /* 232ch：放送大学キャンパスon */
     {   5, CHTYPE_SATELLITE, 0, "531"},  /* 531ch：放送大学ラジオ */
-    {   5, CHTYPE_SATELLITE, 1, "251"},  /* 251ch：BS釣りビジョン */
     /* ch.13 */
     {   6, CHTYPE_SATELLITE, 0, "141"},  /* 141ch：BS日テレ */
     {   6, CHTYPE_SATELLITE, 1, "181"},  /* 181ch：BSフジ */
