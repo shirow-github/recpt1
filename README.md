@@ -102,7 +102,7 @@ CS2-CS24: CS Channels
 
 ----
 ##  動作確認環境
-Ubuntu 24.04.1 LTS GNU/Linux
+Ubuntu 24.04.1 LTS GNU/Linux  
 Linux 6.8.0-48-generic SMP x86_64
 
 ## Special Thanks
