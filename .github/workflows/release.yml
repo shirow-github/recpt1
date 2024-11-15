@@ -80,10 +80,11 @@ jobs:
       # バイナリファイルを、ZIP形式で圧縮する
       - name: Compress binary files into a zip file
         run: |
+          sudo apt-get install -y --no-install-recommends 7zip
           mkdir recpt1_bin
-          Copy-Item -Path "./recpt1/recpt1" -Destination "./recpt1_bin/recpt1" -Force
-          Copy-Item -Path "./recpt1/recpt1ctl" -Destination "./recpt1_bin/recpt1ctl" -Force
-          Copy-Item -Path "./recpt1/checksignal" -Destination "./recpt1_bin/checksignal" -Force
+          cp ./recpt1/recpt1 ./recpt1_bin/recpt1
+          cp ./recpt1/recpt1ctl ./recpt1_bin/recpt1ctl
+          cp ./recpt1/checksignal ./recpt1_bin/checksignal
           7z a -tzip ${{ steps.set_version.outputs.archive_path }} recpt1_bin
 
       # バイナリファイルをアップする
