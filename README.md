@@ -13,7 +13,7 @@ PT1/PT2/PT3をLinuxで使う為の録画ツール(shirow-github版)
   - PT3：https://github.com/m-tsudo/pt3/
   - PX4/PX5/PX-MLT：https://github.com/nns779/px4_drv/
 ####  ◎その他ソフトウェア
-  - libarib25(shirow-github版)：https://github.com/shirow-github/libarib25/
+  - libaribb25(shirow-github版)：https://github.com/shirow-github/libaribb25/
   - libpcsclite-bcas(shirow-github版)：https://github.com/shirow-github/libpcsclite-bcas/
 
 ----
