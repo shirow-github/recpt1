@@ -633,7 +633,11 @@ static const struct file_operations pt1_fops = {
 	.unlocked_ioctl		=	pt1_unlocked_ioctl,
 	.compat_ioctl		=	pt1_compat_ioctl,
 #endif
+#if LINUX_VERSION_CODE < KERNEL_VERSION(6,12,0)
 	.llseek		=	no_llseek,
+#else
+	.llseek		=	noop_llseek,
+#endif
 };
 
 static	int	pt1_makering(struct pci_dev *pdev, PT1_DEVICE *dev_conf)
