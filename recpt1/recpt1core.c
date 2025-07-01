@@ -227,7 +227,7 @@ show_channels(void)
 	fprintf(stderr, "BS21_2: グリーンチャンネル\n");
 	fprintf(stderr, "BS23_0: ディズニーチャンネル\n");
 	fprintf(stderr, "BS23_1: BSよしもと\n");
-	fprintf(stderr, "BS23_2: BS松竹東急\n");
+	fprintf(stderr, "BS23_2: J:COM BS\n");
 
 	fprintf(stderr, "C13-C63: CATV Channels\n");
 	fprintf(stderr, "CS2-CS24: CS Channels\n");

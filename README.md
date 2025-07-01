@@ -60,7 +60,7 @@ $ recpt1 録画するチャンネル番号 録画秒数 出力先ファイル名
 詳しいオプションはrecpt1 --helpをご覧下さい。
 ```
 ----
-## チャンネル番号 (2025年03月03日現在)
+## チャンネル番号 (2025年07月01日現在)
 13-62: Terrestrial Channels
 
 BS01_0: BS朝日  
@@ -94,7 +94,7 @@ BS21_1: 日本映画専門チャンネル
 BS21_2: グリーンチャンネル  
 BS23_0: ディズニーチャンネル  
 BS23_1: BSよしもと  
-BS23_2: BS松竹東急  
+BS23_2: J:COM BS  
 
 C13-C63: CATV Channels
 
@@ -103,7 +103,7 @@ CS2-CS24: CS Channels
 ----
 ##  動作確認環境
 Ubuntu 24.04.2 LTS GNU/Linux  
-Linux 6.8.0-54-generic SMP x86_64
+Linux 6.8.0-63-generic SMP x86_64
 
 ## Special Thanks
 2chの「Linuxでテレビ総合」スレッドの皆様
