@@ -108,7 +108,7 @@ ISDB_T_FREQ_CONV_TABLE    isdb_t_conv_table[] = {
                                           * 290ch：TAKARAZUKA SKY STAGE
                                           * 311ch：アクションチャンネル
                                           * 316ch：ミステリーチャンネル
-                                          * 321ch：スペースシャワーTVプラス
+                                          * 321ch：ミュージック・ジャパンTV
                                           * 333ch：AT-X
                                           * 353ch：BBCワールドニュース */
     {  20, CHTYPE_SATELLITE, 0, "CS18"}, /* ND18：
