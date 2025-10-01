@@ -60,7 +60,7 @@ $ recpt1 録画するチャンネル番号 録画秒数 出力先ファイル名
 詳しいオプションはrecpt1 --helpをご覧下さい。
 ```
 ----
-## チャンネル番号 (2025年07月01日現在)
+## チャンネル番号 (2025年10月01日現在)
 13-62: Terrestrial Channels
 
 BS01_0: BS朝日  
@@ -80,7 +80,7 @@ BS13_0: BS日テレ
 BS13_1: BSフジ  
 BS13_2: 放送大学  
 BS15_0: NHK BS  
-BS15_1: BS10スターチャンネル  
+BS15_1: BS10プレミアム  
 BS15_2: BS10  
 BS17_0: NHK BSプレミアム 4K  
 BS17_1: BS-TBS 4K  
@@ -102,8 +102,8 @@ CS2-CS24: CS Channels
 
 ----
 ##  動作確認環境
-Ubuntu 24.04.2 LTS GNU/Linux  
-Linux 6.8.0-63-generic SMP x86_64
+Ubuntu 24.04.3 LTS GNU/Linux  
+Linux 6.8.0-85-generic SMP x86_64
 
 ## Special Thanks
 2chの「Linuxでテレビ総合」スレッドの皆様

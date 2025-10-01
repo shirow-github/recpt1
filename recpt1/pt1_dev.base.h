@@ -45,7 +45,7 @@ ISDB_T_FREQ_CONV_TABLE    isdb_t_conv_table[] = {
     /* ch.15 */
     {   7, CHTYPE_SATELLITE, 0, "101"},  /* 101ch：NHK BS */
     {   7, CHTYPE_SATELLITE, 0, "102"},  /* 102ch：NHK BS 臨時 */
-    {   7, CHTYPE_SATELLITE, 1, "201"},  /* 201ch：BS10スターチャンネル */
+    {   7, CHTYPE_SATELLITE, 1, "201"},  /* 201ch：BS10プレミアム */
     {   7, CHTYPE_SATELLITE, 2, "200"},  /* 200ch：BS10 */
     /* ch.17 */
     {   8, CHTYPE_SATELLITE, 0, "401"},  /* 401ch：NHK BSプレミアム 4K */
