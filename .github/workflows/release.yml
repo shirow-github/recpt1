@@ -109,7 +109,7 @@ jobs:
 
       # 取得した upload_url を使ってリリースアセットをアップロードする　（Copilotによる修正）
       - name: upload_release_asset_to_release
-        uses: actions/upload-release-asset@v1 # https://github.com/actions/upload-release-asset
+        uses: shogo82148/actions-upload-release-asset@v1 # https://github.com/shogo82148/actions-upload-release-asset
         # タグが push された場合のみ実行される
         if: startsWith(github.ref, 'refs/tags/')
         env:
