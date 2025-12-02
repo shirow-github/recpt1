@@ -1,6 +1,6 @@
 # recpt1 (shirow-github Version)
 
-*Current Version:* 1.2.13
+*Current Version:* 1.2.14
 
 PT1/PT2/PT3をLinuxで使う為の録画ツール(shirow-github版)  
 ※こちらはフォーク版ですのでご注意下さい。
@@ -103,7 +103,7 @@ CS2-CS24: CS Channels
 ----
 ##  動作確認環境
 Ubuntu 24.04.3 LTS GNU/Linux  
-Linux 6.8.0-85-generic SMP x86_64
+Linux 6.8.0-88-generic SMP x86_64
 
 ## Special Thanks
 2chの「Linuxでテレビ総合」スレッドの皆様
