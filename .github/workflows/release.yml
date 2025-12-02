@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6 # https://github.com/actions/checkout
 
       # コンパイラーをインストールする
       # 参照：https://github.com/macaron/recpt1-static-build
@@ -56,14 +56,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          VERSION=${GITHUB_REF/refs\/tags\//}
+          # GITHUB_REF からタグのみ取り出す
+          VERSION=${GITHUB_REF#refs/tags/}
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
-          echo "archive_path=recpt1_${VERSION}.zip" >> $ENV:GITHUB_OUTPUT
+          echo "archive_path=recpt1_${VERSION}.zip" >> $GITHUB_OUTPUT
 
       # recpt1をスタティックビルドし、バイナリファイルを作成する
       - name: Build for recpt1
         working-directory: recpt1
         run: |
+          sudo apt-get update
           sudo apt-get install -y --no-install-recommends autoconf automake
           sed -i 's/CFLAGS   = -O2 -g -pthread/CFLAGS   = -static -O2 -g -pthread/g' Makefile.in
           sed -i 's/LDFLAGS  =/LDFLAGS  = -static/g' Makefile.in
@@ -87,24 +89,12 @@ jobs:
           cp ./recpt1/checksignal ./recpt1_bin/checksignal
           7z a -tzip ${{ steps.set_version.outputs.archive_path }} recpt1_bin
 
-      # バイナリファイルをアップする
-      - name: upload_release_asset
-        uses: actions/upload-artifact@v5
-        # タグが push された場合のみ実行される
-        if: startsWith(github.ref, 'refs/tags/')
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          # リリースするバイナリファイル
-          #files: |
-          name: ${{ steps.set_version.outputs.archive_path }}
-          path: ${{ steps.set_version.outputs.archive_path }}
-
       # リリース文書を作成する
+      # まずリリースを作成して upload_url を取得する (Copilotによる修正)
       - name: create_release
-        uses: shogo82148/actions-create-release@v1
+        uses: shogo82148/actions-create-release@v1 # https://github.com/shogo82148/actions-create-release
         id: create_release
-        # タグが push された場合のみ実行され
+        # タグが push された場合のみ実行される
         if: startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -116,3 +106,16 @@ jobs:
             下書きかつプレリリースの状態で作成されます。
           draft: true # 下書き状態で作成する場合は true (省略時 false)
           prerelease: true # プレリリース表示を付ける場合は true (省略時 false)
+
+      # 取得した upload_url を使ってリリースアセットをアップロードする　（Copilotによる修正）
+      - name: upload_release_asset_to_release
+        uses: actions/upload-release-asset@v1 # https://github.com/actions/upload-release-asset
+        # タグが push された場合のみ実行される
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ steps.set_version.outputs.archive_path }}
+          asset_name: ${{ steps.set_version.outputs.archive_path }}
+          asset_content_type: application/zip
