@@ -89,16 +89,16 @@ jobs:
 
       # バイナリファイルをアップする
       - name: upload_release_asset
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         # タグが push された場合のみ実行される
         if: startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           # リリースするバイナリファイル
-          files: |
-            name: ${{ steps.set_version.outputs.archive_path }}
-            path: ${{ steps.set_version.outputs.archive_path }}
+          #files: |
+          name: ${{ steps.set_version.outputs.archive_path }}
+          path: ${{ steps.set_version.outputs.archive_path }}
 
       # リリース文書を作成する
       - name: create_release
